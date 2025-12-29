@@ -41,6 +41,7 @@ def supervisor_node(state: TravelState):
     # Extract which agent to call from response
     content = result.content.lower()
     
+    # Let LLM decide - parse its response
     if "flight_agent" in content:
         next_agent = "flight_agent"
     elif "accommodation_agent" in content:
@@ -52,17 +53,8 @@ def supervisor_node(state: TravelState):
     elif "finish" in content:
         next_agent = "FINISH"
     else:
-        # Default flow
-        if not state.get('flight_info'):
-            next_agent = "flight_agent"
-        elif not state.get('hotel_info'):
-            next_agent = "accommodation_agent"
-        elif not state.get('itinerary_info'):
-            next_agent = "itinerary_agent"
-        elif not state.get('budget_info'):
-            next_agent = "budget_agent"
-        else:
-            next_agent = "FINISH"
+        # If LLM didn't specify, it means finish
+        next_agent = "FINISH"
     
     return {**state, "next_agent": next_agent, "messages": [result]}
 
@@ -258,7 +250,12 @@ def route_next(state: TravelState) -> str:
     next_agent = state.get("next_agent", "")
     
     if next_agent == "FINISH":
-        return "final_summary"
+        # Check if we actually planned a trip or just answered a question
+        if state.get('flight_info') or state.get('hotel_info'):
+            return "final_summary"
+        else:
+            # Just a simple response, skip summary
+            return END
     elif next_agent == "flight_agent":
         return "flight_agent"
     elif next_agent == "accommodation_agent":
@@ -268,7 +265,8 @@ def route_next(state: TravelState) -> str:
     elif next_agent == "budget_agent":
         return "budget_agent"
     else:
-        return "supervisor"
+        # Shouldn't loop back to supervisor indefinitely
+        return END
 
 
 # ============================================
@@ -299,7 +297,8 @@ def build_travel_agent():
             "accommodation_agent": "accommodation_agent",
             "itinerary_agent": "itinerary_agent",
             "budget_agent": "budget_agent",
-            "final_summary": "final_summary"
+            "final_summary": "final_summary",
+            END: END  # Direct end for non-travel queries
         }
     )
     
