@@ -181,14 +181,7 @@ def final_summary_node(state: TravelState):
     """Create final comprehensive summary."""
     summary_parts = []
     
-    # Get user's original request
-    user_request = ""
-    for msg in state['messages']:
-        if isinstance(msg, HumanMessage):
-            user_request = msg.content
-            break
-    
-    summary_parts.append(f"Based on your request: '{user_request}'\n")
+    # Start directly with the plan
     summary_parts.append("Here's your complete travel plan!\n\n")
     
     # Flight
