@@ -1,0 +1,138 @@
+[
+  {
+    "id": "ATT001",
+    "name": "Senso-ji Temple",
+    "city": "Tokyo",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Ancient Buddhist temple in Asakusa"
+  },
+  {
+    "id": "ATT002",
+    "name": "Tokyo Skytree",
+    "city": "Tokyo",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 25,
+    "description": "Tallest tower in Japan with observation decks"
+  },
+  {
+    "id": "ATT003",
+    "name": "Tsukiji Outer Market",
+    "city": "Tokyo",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 30,
+    "description": "Famous seafood market and street food"
+  },
+  {
+    "id": "ATT004",
+    "name": "Meiji Shrine",
+    "city": "Tokyo",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Shinto shrine in peaceful forest setting"
+  },
+  {
+    "id": "ATT005",
+    "name": "Eiffel Tower",
+    "city": "Paris",
+    "category": "Landmark",
+    "duration_hours": 2.5,
+    "cost": 28,
+    "description": "Iconic iron tower with panoramic views"
+  },
+  {
+    "id": "ATT006",
+    "name": "Louvre Museum",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 4,
+    "cost": 17,
+    "description": "World's largest art museum"
+  },
+  {
+    "id": "ATT007",
+    "name": "Montmartre & Sacré-Cœur",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Historic hilltop district with basilica"
+  },
+  {
+    "id": "ATT008",
+    "name": "Tanah Lot Temple",
+    "city": "Bali",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 5,
+    "description": "Sea temple on rocky outcrop with sunset views"
+  },
+  {
+    "id": "ATT009",
+    "name": "Ubud Monkey Forest",
+    "city": "Bali",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 8,
+    "description": "Sacred forest sanctuary with playful monkeys"
+  },
+  {
+    "id": "ATT010",
+    "name": "Tegallalang Rice Terraces",
+    "city": "Bali",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 3,
+    "description": "Stunning emerald rice paddies"
+  },
+  {
+    "id": "ATT011",
+    "name": "Grand Palace",
+    "city": "Bangkok",
+    "category": "Culture",
+    "duration_hours": 3,
+    "cost": 15,
+    "description": "Royal palace complex with ornate temples"
+  },
+  {
+    "id": "ATT012",
+    "name": "Wat Pho",
+    "city": "Bangkok",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 7,
+    "description": "Temple with giant reclining Buddha"
+  },
+  {
+    "id": "ATT013",
+    "name": "Statue of Liberty",
+    "city": "New York",
+    "category": "Landmark",
+    "duration_hours": 3,
+    "cost": 24,
+    "description": "Iconic symbol of freedom on Liberty Island"
+  },
+  {
+    "id": "ATT014",
+    "name": "Central Park",
+    "city": "New York",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Massive urban park in Manhattan"
+  },
+  {
+    "id": "ATT015",
+    "name": "Sydney Opera House",
+    "city": "Sydney",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 20,
+    "description": "Architectural masterpiece and performing arts venue"
+  }
+]
+

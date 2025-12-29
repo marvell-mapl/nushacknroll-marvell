@@ -1,0 +1,113 @@
+[
+  {
+    "id": "ACC001",
+    "name": "Tokyo Central Hotel",
+    "city": "Tokyo",
+    "type": "Hotel",
+    "price_per_night": 120,
+    "rating": 4.5,
+    "amenities": ["WiFi", "Breakfast", "Gym", "Airport Shuttle"],
+    "location": "Shibuya",
+    "description": "Modern hotel in central Tokyo with easy metro access"
+  },
+  {
+    "id": "ACC002",
+    "name": "Sakura Guesthouse",
+    "city": "Tokyo",
+    "type": "Guesthouse",
+    "price_per_night": 45,
+    "rating": 4.2,
+    "amenities": ["WiFi", "Shared Kitchen"],
+    "location": "Asakusa",
+    "description": "Budget-friendly traditional guesthouse near temples"
+  },
+  {
+    "id": "ACC003",
+    "name": "Luxury Tokyo Suites",
+    "city": "Tokyo",
+    "type": "Hotel",
+    "price_per_night": 280,
+    "rating": 4.9,
+    "amenities": ["WiFi", "Breakfast", "Gym", "Pool", "Spa", "Concierge"],
+    "location": "Roppongi",
+    "description": "5-star luxury accommodation with panoramic city views"
+  },
+  {
+    "id": "ACC004",
+    "name": "Paris Boutique Hotel",
+    "city": "Paris",
+    "type": "Hotel",
+    "price_per_night": 150,
+    "rating": 4.6,
+    "amenities": ["WiFi", "Breakfast", "Bar"],
+    "location": "Le Marais",
+    "description": "Charming boutique hotel in historic Paris district"
+  },
+  {
+    "id": "ACC005",
+    "name": "Seine View Apartments",
+    "city": "Paris",
+    "type": "Apartment",
+    "price_per_night": 95,
+    "rating": 4.3,
+    "amenities": ["WiFi", "Kitchen", "Washer"],
+    "location": "Latin Quarter",
+    "description": "Self-catering apartments near Notre-Dame"
+  },
+  {
+    "id": "ACC006",
+    "name": "Bali Beach Resort",
+    "city": "Bali",
+    "type": "Resort",
+    "price_per_night": 85,
+    "rating": 4.7,
+    "amenities": ["WiFi", "Breakfast", "Pool", "Beach Access", "Spa"],
+    "location": "Seminyak",
+    "description": "Beachfront resort with traditional Balinese design"
+  },
+  {
+    "id": "ACC007",
+    "name": "Ubud Jungle Villa",
+    "city": "Bali",
+    "type": "Villa",
+    "price_per_night": 65,
+    "rating": 4.8,
+    "amenities": ["WiFi", "Pool", "Kitchen"],
+    "location": "Ubud",
+    "description": "Private villa surrounded by rice terraces"
+  },
+  {
+    "id": "ACC008",
+    "name": "Bangkok City Center Inn",
+    "city": "Bangkok",
+    "type": "Hotel",
+    "price_per_night": 55,
+    "rating": 4.1,
+    "amenities": ["WiFi", "Breakfast", "Rooftop Bar"],
+    "location": "Sukhumvit",
+    "description": "Affordable hotel near BTS skytrain"
+  },
+  {
+    "id": "ACC009",
+    "name": "Manhattan Midtown Hotel",
+    "city": "New York",
+    "type": "Hotel",
+    "price_per_night": 220,
+    "rating": 4.4,
+    "amenities": ["WiFi", "Gym", "Business Center"],
+    "location": "Midtown",
+    "description": "Business hotel near Times Square"
+  },
+  {
+    "id": "ACC010",
+    "name": "Sydney Harbor Suites",
+    "city": "Sydney",
+    "type": "Hotel",
+    "price_per_night": 180,
+    "rating": 4.7,
+    "amenities": ["WiFi", "Breakfast", "Pool", "Harbor View"],
+    "location": "Circular Quay",
+    "description": "Stunning views of Sydney Opera House and Harbor Bridge"
+  }
+]
+
