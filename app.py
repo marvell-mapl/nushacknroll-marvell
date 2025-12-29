@@ -38,10 +38,6 @@ st.set_page_config(
 # SESSION STATE INITIALIZATION
 # ============================================
 
-# Initialize status placeholder for thinking animations
-if 'thought_placeholder' not in st.session_state:
-    st.session_state.thought_placeholder = None
-
 # Initialize messages
 if 'messages' not in st.session_state:
     st.session_state.messages = []
@@ -81,32 +77,27 @@ if prompt:
     
     # Display assistant response
     with st.chat_message("assistant"):
-        # Thinking placeholder
-        st.session_state.thought_placeholder = st.empty()
-        st.session_state.thought_placeholder.write("🤔 Thinking...")
+        with st.spinner("Thinking..."):
+            try:
+                # Convert to LangChain format
+                lc_messages = [convert_dict_to_lc_message(msg) for msg in st.session_state.messages]
+                
+                # Invoke agent
+                response = st.session_state.agent.invoke({
+                    "messages": lc_messages,
+                    "tools_called": []
+                })
+                
+                # Get final response
+                assistant_msg = response["messages"][-1].content
+                
+            except Exception as e:
+                error_msg = f"Sorry, I encountered an error: {str(e)}"
+                st.error(error_msg)
+                assistant_msg = error_msg
         
-        try:
-            # Convert to LangChain format
-            lc_messages = [convert_dict_to_lc_message(msg) for msg in st.session_state.messages]
-            
-            # Invoke agent
-            response = st.session_state.agent.invoke({
-                "messages": lc_messages,
-                "tools_called": []
-            })
-            
-            # Get final response
-            assistant_msg = response["messages"][-1].content
-            
-            # Clear thinking and display response
-            st.session_state.thought_placeholder.empty()
-            st.write(assistant_msg)
-            
-        except Exception as e:
-            st.session_state.thought_placeholder.empty()
-            error_msg = f"Sorry, I encountered an error: {str(e)}"
-            st.error(error_msg)
-            assistant_msg = error_msg
+        # Display response after spinner
+        st.write(assistant_msg)
     
     # Add assistant message
     st.session_state.messages.append({"role": "assistant", "content": assistant_msg})

@@ -16,7 +16,6 @@ import json
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import streamlit as st
 
 load_dotenv()
 
@@ -34,21 +33,11 @@ with open(DATA_DIR / "attractions.json", 'r', encoding='utf-8') as f:
 
 
 # ============================================
-# UTILITY FUNCTIONS
-# ============================================
-
-def update_thought(content: str):
-    """Update the thinking status in Streamlit UI."""
-    if hasattr(st.session_state, 'thought_placeholder') and st.session_state.thought_placeholder:
-        st.session_state.thought_placeholder.markdown(f"**{content}**")
-
-
-# ============================================
 # STEP 1: DEFINE TOOLS
 # ============================================
 
 @tool
-def flightsAgent(origin: str, destination: str, date: str, passengers: int = 1):
+def flightsAgent(origin: str, destination: str, date: str, passengers: str = "1"):
     """
     Search for available flights. Call this when user asks about flights or air travel.
     
@@ -61,7 +50,8 @@ def flightsAgent(origin: str, destination: str, date: str, passengers: int = 1):
     Returns:
         List of available flights with prices and times
     """
-    update_thought("✈️ Searching for flights...")
+    # Convert passengers to int
+    passengers = int(passengers)
     
     # Search flights data
     matching_flights = [
@@ -103,7 +93,7 @@ def flightsAgent(origin: str, destination: str, date: str, passengers: int = 1):
 
 
 @tool
-def accommodationsAgent(destination: str, check_in: str, check_out: str, guests: int = 1):
+def accommodationsAgent(destination: str, check_in: str, check_out: str, guests: str = "1"):
     """
     Search for hotels and accommodations. Call this when user asks about places to stay, hotels, or lodging.
     
@@ -116,7 +106,8 @@ def accommodationsAgent(destination: str, check_in: str, check_out: str, guests:
     Returns:
         List of available hotels with prices and ratings
     """
-    update_thought("🏨 Searching for accommodations...")
+    # Convert guests to int
+    guests = int(guests)
     
     # Calculate number of nights
     try:
@@ -174,7 +165,7 @@ def accommodationsAgent(destination: str, check_in: str, check_out: str, guests:
 
 
 @tool
-def budgetAgent(flights_cost: int, hotel_cost: int, num_days: int, activities_cost: int = 0):
+def budgetAgent(flights_cost: str, hotel_cost: str, num_days: str, activities_cost: str = "0"):
     """
     Calculate total trip budget with detailed breakdown. Call this when user wants to know total cost or budget.
     
@@ -187,7 +178,11 @@ def budgetAgent(flights_cost: int, hotel_cost: int, num_days: int, activities_co
     Returns:
         Detailed budget breakdown with total cost and analysis
     """
-    update_thought("💰 Calculating budget breakdown...")
+    # Convert to integers
+    flights_cost = int(flights_cost)
+    hotel_cost = int(hotel_cost)
+    num_days = int(num_days)
+    activities_cost = int(activities_cost)
     
     # Calculate additional costs with realistic estimates
     food_cost = num_days * 60  # Estimate $60 per day for food
@@ -221,7 +216,7 @@ def budgetAgent(flights_cost: int, hotel_cost: int, num_days: int, activities_co
 
 
 @tool
-def itineraryAgent(destination: str, num_days: int, interests: str = "sightseeing, food, culture"):
+def itineraryAgent(destination: str, num_days: str, interests: str = "sightseeing, food, culture"):
     """
     Generate a detailed day-by-day travel itinerary. Call this when user wants a complete trip plan or daily schedule.
     
@@ -233,7 +228,8 @@ def itineraryAgent(destination: str, num_days: int, interests: str = "sightseein
     Returns:
         Formatted day-by-day itinerary with activities
     """
-    update_thought("📅 Creating personalized itinerary...")
+    # Convert num_days to int
+    num_days = int(num_days)
     
     # Get attractions for destination
     attractions = [
