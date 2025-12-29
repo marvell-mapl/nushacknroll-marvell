@@ -1,505 +1,321 @@
 """
-Travel Agent - Complete Implementation
-Multi-agent ReAct framework with LangGraph for travel planning.
-Simplified hackathon architecture with 4 specialized tools.
+Multi-Agent Travel Planner - Main orchestration.
+Brings together all specialist agents into a coordinated system.
 """
 
-from langchain.tools import tool
-from langchain_groq import ChatGroq
-from langchain.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph, END
-from langchain_core.messages import AIMessage, ToolMessage, BaseMessage
-from typing import List, Literal, TypedDict, Annotated
+from langchain_core.messages import AIMessage, ToolMessage, HumanMessage
+from typing import List, TypedDict, Annotated
 import operator
-from datetime import datetime
-import json
-import os
-from pathlib import Path
-from dotenv import load_dotenv
 
-load_dotenv()
-
-# Load data files once at startup
-DATA_DIR = Path(__file__).parent / "data"
-
-with open(DATA_DIR / "flights.json", 'r', encoding='utf-8') as f:
-    FLIGHTS_DATA = json.load(f)
-
-with open(DATA_DIR / "accommodations.json", 'r', encoding='utf-8') as f:
-    ACCOMMODATIONS_DATA = json.load(f)
-
-with open(DATA_DIR / "attractions.json", 'r', encoding='utf-8') as f:
-    ATTRACTIONS_DATA = json.load(f)
+from flight_agent import create_flight_agent, search_flights_tool
+from accommodation_agent import create_accommodation_agent, search_hotels_tool
+from itinerary_agent import create_itinerary_agent, get_attractions_tool
+from budget_agent import create_budget_agent, calculate_budget_tool
+from supervisor import create_supervisor
 
 
 # ============================================
-# STEP 1: DEFINE TOOLS
-# ============================================
-
-@tool
-def flightsAgent(origin: str, destination: str, date: str, passengers: str = "1"):
-    """
-    Search for available flights. Call this when user asks about flights or air travel.
-    
-    Args:
-        origin: Departure city (e.g., "New York", "London", "Singapore")
-        destination: Arrival city (e.g., "Paris", "Tokyo", "Bali")
-        date: Travel date in YYYY-MM-DD format
-        passengers: Number of passengers (default 1)
-        
-    Returns:
-        List of available flights with prices and times
-    """
-    # Convert passengers to int
-    passengers = int(passengers)
-    
-    # Search flights data
-    matching_flights = [
-        f for f in FLIGHTS_DATA
-        if f['origin'].lower() == origin.lower() and 
-           f['destination'].lower() == destination.lower()
-    ]
-    
-    if not matching_flights:
-        result = f"### ✈️ No flights found: {origin} → {destination}\n\n"
-        result += "Sorry, we don't have flights for this route in our database.\n"
-        result += f"Available destinations from {origin}: "
-        
-        # Show available destinations from this origin
-        available = set(f['destination'] for f in FLIGHTS_DATA if f['origin'].lower() == origin.lower())
-        result += ", ".join(sorted(available)) if available else "None"
-        
-        return {"messages": result}
-    
-    # Format flight options
-    flight_options = []
-    for i, flight in enumerate(matching_flights[:5], 1):  # Show up to 5 flights
-        total_price = flight['price'] * passengers
-        stops_text = "Direct" if flight['stops'] == 0 else f"{flight['stops']} stop(s)"
-        
-        flight_options.append(
-            f"**Flight {i}:** {flight['airline']} ({flight['id']})\n"
-            f"  💵 Price: ${total_price} ({passengers} passenger(s) × ${flight['price']})\n"
-            f"  🛫 Departs: {flight['departure_time']} | 🛬 Arrives: {flight['arrival_time']}\n"
-            f"  ⏱️ Duration: {flight['duration_hours']} hours | {stops_text}\n"
-            f"  🎫 Class: {flight['class']}\n"
-        )
-    
-    result = f"### ✈️ Available Flights: {origin} → {destination}\n\n"
-    result += "\n".join(flight_options)
-    result += f"\n\n*Showing {len(matching_flights[:5])} of {len(matching_flights)} available flights*"
-    
-    return {"messages": result}
-
-
-@tool
-def accommodationsAgent(destination: str, check_in: str, check_out: str, guests: str = "1"):
-    """
-    Search for hotels and accommodations. Call this when user asks about places to stay, hotels, or lodging.
-    
-    Args:
-        destination: City or location (e.g., "Paris", "Barcelona", "Tokyo")
-        check_in: Check-in date in YYYY-MM-DD format
-        check_out: Check-out date in YYYY-MM-DD format
-        guests: Number of guests (default 1)
-        
-    Returns:
-        List of available hotels with prices and ratings
-    """
-    # Convert guests to int
-    guests = int(guests)
-    
-    # Calculate number of nights
-    try:
-        check_in_date = datetime.strptime(check_in, "%Y-%m-%d")
-        check_out_date = datetime.strptime(check_out, "%Y-%m-%d")
-        nights = (check_out_date - check_in_date).days
-        if nights <= 0:
-            nights = 3  # Default
-    except:
-        nights = 3  # Default
-    
-    # Search accommodations data
-    matching_hotels = [
-        h for h in ACCOMMODATIONS_DATA
-        if h['city'].lower() == destination.lower()
-    ]
-    
-    if not matching_hotels:
-        result = f"### 🏨 No accommodations found in {destination}\n\n"
-        result += "Sorry, we don't have accommodations for this city in our database.\n"
-        result += "Available cities: "
-        
-        # Show available cities
-        available = set(h['city'] for h in ACCOMMODATIONS_DATA)
-        result += ", ".join(sorted(available))
-        
-        return {"messages": result}
-    
-    # Sort by rating (descending)
-    matching_hotels = sorted(matching_hotels, key=lambda x: x['rating'], reverse=True)
-    
-    # Format hotel options
-    hotel_options = []
-    for i, hotel in enumerate(matching_hotels[:5], 1):  # Show up to 5 hotels
-        total_price = hotel['price_per_night'] * nights
-        amenities_str = ", ".join(hotel['amenities'][:4])
-        if len(hotel['amenities']) > 4:
-            amenities_str += f", +{len(hotel['amenities']) - 4} more"
-        
-        hotel_options.append(
-            f"**Option {i}:** {hotel['name']} ({hotel['id']})\n"
-            f"  🏢 Type: {hotel['type']} | 📍 {hotel['location']}\n"
-            f"  ⭐ Rating: {hotel['rating']}/5.0\n"
-            f"  💵 ${hotel['price_per_night']}/night × {nights} nights = **${total_price}**\n"
-            f"  🎯 Amenities: {amenities_str}\n"
-            f"  ℹ️ {hotel['description']}\n"
-        )
-    
-    result = f"### 🏨 Accommodations in {destination}\n"
-    result += f"**📅 {check_in} to {check_out}** ({nights} nights, {guests} guest(s))\n\n"
-    result += "\n".join(hotel_options)
-    result += f"\n\n*Showing {len(matching_hotels[:5])} of {len(matching_hotels)} available accommodations*"
-    
-    return {"messages": result}
-
-
-@tool
-def budgetAgent(flights_cost: str, hotel_cost: str, num_days: str, activities_cost: str = "0"):
-    """
-    Calculate total trip budget with detailed breakdown. Call this when user wants to know total cost or budget.
-    
-    Args:
-        flights_cost: Total flight cost in dollars
-        hotel_cost: Total hotel cost in dollars
-        num_days: Number of days for the trip
-        activities_cost: Total cost of planned activities in dollars (default 0)
-        
-    Returns:
-        Detailed budget breakdown with total cost and analysis
-    """
-    # Convert to integers
-    flights_cost = int(flights_cost)
-    hotel_cost = int(hotel_cost)
-    num_days = int(num_days)
-    activities_cost = int(activities_cost)
-    
-    # Calculate additional costs with realistic estimates
-    food_cost = num_days * 60  # Estimate $60 per day for food
-    transport_cost = num_days * 30  # Estimate $30 per day for local transport
-    misc_cost = int((flights_cost + hotel_cost) * 0.1)  # 10% buffer
-    
-    total_cost = flights_cost + hotel_cost + activities_cost + food_cost + transport_cost + misc_cost
-    
-    result = f"""### 💰 Complete Trip Budget Breakdown
-
-| Category | Cost |
-|----------|------|
-| ✈️ **Flights** | ${flights_cost:,} |
-| 🏨 **Accommodation** | ${hotel_cost:,} |
-| 🎭 **Activities** | ${activities_cost:,} |
-| 🍽️ **Food & Dining** | ${food_cost:,} (${food_cost // num_days}/day) |
-| 🚗 **Local Transport** | ${transport_cost:,} (${transport_cost // num_days}/day) |
-| 💼 **Miscellaneous** | ${misc_cost:,} (10% buffer) |
-| **━━━━━━━━━━** | **━━━━━━━** |
-| **💵 TOTAL** | **${total_cost:,}** |
-
-📊 **Budget Analysis:**
-- Flight costs represent {(flights_cost/total_cost*100):.1f}% of total budget
-- Accommodation costs represent {(hotel_cost/total_cost*100):.1f}% of total budget
-- Daily spending (food + transport + activities): ${(food_cost + transport_cost + activities_cost) // num_days}/day
-
-*Budget calculated for {num_days} days*
-"""
-    
-    return {"messages": result}
-
-
-@tool
-def itineraryAgent(destination: str, num_days: str, interests: str = "sightseeing, food, culture"):
-    """
-    Generate a detailed day-by-day travel itinerary. Call this when user wants a complete trip plan or daily schedule.
-    
-    Args:
-        destination: Travel destination city
-        num_days: Number of days for the trip
-        interests: User's interests (e.g., "adventure, food, history", "beaches, relaxation", "museums, culture")
-        
-    Returns:
-        Formatted day-by-day itinerary with activities
-    """
-    # Convert num_days to int
-    num_days = int(num_days)
-    
-    # Get attractions for destination
-    attractions = [
-        a for a in ATTRACTIONS_DATA
-        if a['city'].lower() == destination.lower()
-    ]
-    
-    if not attractions:
-        result = f"### 📋 No attractions found for {destination}\n\n"
-        result += "Sorry, we don't have attraction data for this city.\n"
-        result += "Available cities with attractions: "
-        
-        available = set(a['city'] for a in ATTRACTIONS_DATA)
-        result += ", ".join(sorted(available))
-        
-        return {"messages": result}
-    
-    result = f"### 📋 Your {num_days}-Day {destination} Itinerary\n"
-    result += f"**Interests:** {interests}\n\n"
-    
-    # Distribute attractions across days
-    attractions_per_day = max(1, len(attractions) // num_days)
-    attraction_index = 0
-    total_cost = 0
-    
-    for day in range(1, num_days + 1):
-        result += f"#### 🗓️ Day {day}\n\n"
-        
-        # Select attractions for this day
-        day_attractions = attractions[attraction_index:attraction_index + min(3, len(attractions) - attraction_index)]
-        
-        if not day_attractions:
-            # Cycle back if we run out
-            day_attractions = attractions[:min(3, len(attractions))]
-        
-        for attraction in day_attractions:
-            emoji_map = {
-                "Culture": "🏛️",
-                "Landmark": "🗼",
-                "Food": "🍜",
-                "Nature": "🌳",
-                "Shopping": "🛍️"
-            }
-            emoji = emoji_map.get(attraction['category'], "📍")
-            
-            cost_text = "Free" if attraction['cost'] == 0 else f"${attraction['cost']}"
-            
-            result += f"- **{emoji} {attraction['name']}** ({attraction['category']})\n"
-            result += f"  ⏱️ Duration: {attraction['duration_hours']} hours | 💵 Cost: {cost_text}\n"
-            result += f"  ℹ️ {attraction['description']}\n\n"
-            
-            total_cost += attraction['cost']
-            attraction_index += 1
-        
-        result += "\n"
-    
-    result += f"**💰 Total Activities Cost: ${total_cost}**\n\n"
-    result += "*💡 This itinerary can be customized based on your preferences and pace.*"
-    
-    return {"messages": result}
-
-
-# ============================================
-# STEP 2: SETUP LLM
-# ============================================
-
-def set_up_llm(temperature=0, max_tokens=5000):
-    """Initialize Groq LLM with configuration."""
-    llm = ChatGroq(
-        model="meta-llama/llama-4-scout-17b-16e-instruct",  # Best for complex reasoning
-        temperature=temperature,
-        max_tokens=max_tokens,
-        groq_api_key=os.getenv("GROQ_API_KEY")
-    )
-    return llm
-
-
-def set_up_agent(tools: List, prompt_template):
-    """Bind tools to LLM and create chain with prompt."""
-    llm = set_up_llm(temperature=0)
-    llm_w_tools = llm.bind_tools(tools)
-    chain = prompt_template | llm_w_tools
-    return chain
-
-
-# ============================================
-# STEP 3: CREATE SUPERVISOR PROMPT
-# ============================================
-
-travel_supervisor_prompt = ChatPromptTemplate.from_messages([
-    ("system", f"""
-You are TravelBot, an expert AI Travel Assistant that creates COMPLETE travel plans in ONE response.
-Today's date is {datetime.now().strftime("%Y-%m-%d")}.
-
-You have access to these specialized tools:
-1. **flightsAgent** - Search for flights (requires: origin, destination, date, passengers)
-2. **accommodationsAgent** - Search for hotels (requires: destination, check_in, check_out, guests)
-3. **itineraryAgent** - Generate day-by-day plan (requires: destination, num_days, interests)
-4. **budgetAgent** - Calculate trip budget (requires: flights_cost, hotel_cost, num_days, activities_cost)
-
-**CRITICAL WORKFLOW - Execute ALL steps in ONE turn:**
-
-1. **Extract Information** from user's request:
-   - Origin city (default: Singapore if not mentioned)
-   - Destination city
-   - Travel dates (if not given, use dates 30 days from today)
-   - Number of days (extract from request or dates)
-   - Number of travelers (default: 1)
-   - Budget (if mentioned)
-   - Interests (extract from request, default: "sightseeing, food, culture")
-
-2. **Call ALL tools in sequence** (do NOT wait for user):
-   a) Call flightsAgent → Get flight options and pick the best one
-   b) Call accommodationsAgent → Get hotel options and pick the best one
-   c) Call itineraryAgent → Create day-by-day itinerary
-   d) Call budgetAgent → Calculate total budget using costs from above tools
-   
-3. **Extract costs from tool results**:
-   - From flightsAgent output: Look for "Price: $XXX" and extract the number
-   - From accommodationsAgent output: Look for "= $XXX" (total cost) and extract
-   - From itineraryAgent output: Look for "Total Activities Cost: $XXX" and extract
-   - Pass these numbers to budgetAgent
-
-4. **Present COMPLETE plan in ONE message**:
-   - Start with a brief intro: "Here's your complete X-day trip to [destination]!"
-   - Show selected flight (pick the best value option)
-   - Show selected hotel (pick the best rated option)
-   - Show the itinerary
-   - Show the budget breakdown
-   - If user gave a budget, check if plan is within budget
-   - End with: "Let me know if you'd like to adjust anything!"
-
-**IMPORTANT RULES:**
-- DO NOT ask follow-up questions - make reasonable assumptions
-- DO NOT return partial results - call ALL tools before responding
-- DO NOT show all flight/hotel options - pick the BEST one for them
-- Extract info from user's message and proceed immediately
-- If dates not given, assume travel starts 30 days from today
-- Always call tools in order: flights → accommodation → itinerary → budget
-- Present everything in ONE comprehensive message
-
-**Example:**
-User: "Plan a trip to Tokyo for 4 days"
-You: [Extract: destination=Tokyo, days=4, origin=Singapore, dates=30 days from now]
-     [Call: flightsAgent] → Pick best flight
-     [Call: accommodationsAgent] → Pick best hotel
-     [Call: itineraryAgent] → Get itinerary
-     [Call: budgetAgent with extracted costs]
-     [Return: Complete plan with all info in one message]
-    """),
-    ("placeholder", "{messages}")
-])
-
-# Create the agent by binding tools
-travel_supervisor_agent = set_up_agent(
-    tools=[flightsAgent, accommodationsAgent, budgetAgent, itineraryAgent],
-    prompt_template=travel_supervisor_prompt
-)
-
-
-# ============================================
-# STEP 4: BUILD LANGGRAPH STATE MACHINE
+# STATE DEFINITION
 # ============================================
 
 class TravelState(TypedDict):
-    """State object passed between nodes in the graph."""
-    messages: Annotated[List[BaseMessage], operator.add]  # Conversation history
-    tools_called: List  # Track which tools were invoked
+    """State passed between agents in the workflow."""
+    messages: Annotated[List, operator.add]
+    next_agent: str  # Which agent to call next
+    flight_info: dict  # Store flight selection
+    hotel_info: dict  # Store hotel selection
+    itinerary_info: dict  # Store itinerary
+    budget_info: dict  # Store budget
 
 
-def invoke_travel_supervisor(state: TravelState):
-    """
-    Node: Invoke the supervisor agent to decide next action.
-    This is the "Reasoning" step in the ReAct framework.
-    """
-    # Pass messages as a dict for ChatPromptTemplate
-    result = travel_supervisor_agent.invoke({"messages": state['messages']})
-    state['messages'].append(AIMessage(content=result.content, tool_calls=result.tool_calls))
-    state['tools_called'].append("invoke_travel_supervisor")
-    return state
+# ============================================
+# GRAPH NODES
+# ============================================
 
-
-def travel_tool_node(state: TravelState):
-    """
-    Node: Execute travel-related tools.
-    This is the "Acting" step in the ReAct framework.
-    """
-    tools_by_name = {
-        "flightsAgent": flightsAgent,
-        "accommodationsAgent": accommodationsAgent,
-        "budgetAgent": budgetAgent,
-        "itineraryAgent": itineraryAgent
-    }
+def supervisor_node(state: TravelState):
+    """Supervisor decides which agent to call next."""
+    supervisor = create_supervisor()
+    result = supervisor.invoke({"messages": state['messages']})
     
-    for tool_call in state["messages"][-1].tool_calls:
-        tool = tools_by_name[tool_call["name"]]
-        print(f"🔧 Running tool: {tool_call['name']}")
+    # Extract which agent to call from response
+    content = result.content.lower()
+    
+    if "flight_agent" in content:
+        next_agent = "flight_agent"
+    elif "accommodation_agent" in content:
+        next_agent = "accommodation_agent"
+    elif "itinerary_agent" in content:
+        next_agent = "itinerary_agent"
+    elif "budget_agent" in content:
+        next_agent = "budget_agent"
+    elif "finish" in content:
+        next_agent = "FINISH"
+    else:
+        # Default flow
+        if not state.get('flight_info'):
+            next_agent = "flight_agent"
+        elif not state.get('hotel_info'):
+            next_agent = "accommodation_agent"
+        elif not state.get('itinerary_info'):
+            next_agent = "itinerary_agent"
+        elif not state.get('budget_info'):
+            next_agent = "budget_agent"
+        else:
+            next_agent = "FINISH"
+    
+    return {**state, "next_agent": next_agent, "messages": [result]}
+
+
+def flight_agent_node(state: TravelState):
+    """Flight agent searches and recommends flights."""
+    agent = create_flight_agent()
+    
+    # Create task for flight agent
+    task_msg = HumanMessage(content="Search for flights and recommend the best option.")
+    
+    # Agent reasons and calls tool
+    result = agent.invoke({"messages": state['messages'] + [task_msg]})
+    
+    # If tool call, execute it
+    if hasattr(result, 'tool_calls') and result.tool_calls:
+        tool_call = result.tool_calls[0]
+        tool_result = search_flights_tool.invoke(tool_call['args'])
         
-        # Execute tool
-        observation = tool.invoke(tool_call["args"])
+        # Store in state
+        return {
+            **state,
+            "flight_info": tool_result,
+            "messages": [
+                AIMessage(content=f"Flight agent found {len(tool_result.get('flights', []))} options", tool_calls=result.tool_calls),
+                ToolMessage(content=str(tool_result), tool_call_id=tool_call['id'], name="search_flights_tool")
+            ]
+        }
+    
+    return {**state, "messages": [result]}
+
+
+def accommodation_agent_node(state: TravelState):
+    """Accommodation agent searches and recommends hotels."""
+    agent = create_accommodation_agent()
+    
+    task_msg = HumanMessage(content="Search for accommodations and recommend the best option.")
+    
+    result = agent.invoke({"messages": state['messages'] + [task_msg]})
+    
+    if hasattr(result, 'tool_calls') and result.tool_calls:
+        tool_call = result.tool_calls[0]
+        tool_result = search_hotels_tool.invoke(tool_call['args'])
         
-        # Add tool result to conversation
-        state['messages'].append(ToolMessage(
-            content=observation["messages"],
-            name=tool_call["name"],
-            tool_call_id=tool_call["id"]
-        ))
-        state['tools_called'].append(tool_call["name"])
+        return {
+            **state,
+            "hotel_info": tool_result,
+            "messages": [
+                AIMessage(content=f"Accommodation agent found {len(tool_result.get('hotels', []))} options", tool_calls=result.tool_calls),
+                ToolMessage(content=str(tool_result), tool_call_id=tool_call['id'], name="search_hotels_tool")
+            ]
+        }
     
-    return state
+    return {**state, "messages": [result]}
 
 
-def should_continue_travel(state: TravelState) -> Literal["Action", END]:
-    """
-    Edge: Decide whether to continue the ReAct loop or end.
-    This implements the "Observation" step - evaluating if more actions are needed.
-    """
-    last_message = state["messages"][-1]
+def itinerary_agent_node(state: TravelState):
+    """Itinerary agent creates day-by-day plan."""
+    agent = create_itinerary_agent()
     
-    # Continue if LLM requested more tool calls
-    if hasattr(last_message, "tool_calls") and last_message.tool_calls:
-        return "Action"
+    task_msg = HumanMessage(content="Create a day-by-day itinerary with activities.")
     
-    # End if no more actions needed
-    return END
+    result = agent.invoke({"messages": state['messages'] + [task_msg]})
+    
+    if hasattr(result, 'tool_calls') and result.tool_calls:
+        tool_call = result.tool_calls[0]
+        tool_result = get_attractions_tool.invoke(tool_call['args'])
+        
+        return {
+            **state,
+            "itinerary_info": tool_result,
+            "messages": [
+                AIMessage(content=f"Itinerary agent found {len(tool_result.get('attractions', []))} attractions", tool_calls=result.tool_calls),
+                ToolMessage(content=str(tool_result), tool_call_id=tool_call['id'], name="get_attractions_tool")
+            ]
+        }
+    
+    return {**state, "messages": [result]}
 
 
-def build_travel_agent():
-    """
-    Build the complete LangGraph travel agent with ReAct loop.
+def budget_agent_node(state: TravelState):
+    """Budget agent calculates total costs."""
+    agent = create_budget_agent()
     
-    Flow:
-    START → invoke_supervisor → should_continue? → [Action: tool_node → loop back] or [END]
-    """
-    agent_builder = StateGraph(TravelState)
+    # Extract costs from previous agents
+    flight_cost = 0
+    hotel_cost = 0
+    activities_cost = 0
+    num_days = 3
     
-    # Add nodes
-    agent_builder.add_node('travel_tool_node', travel_tool_node)
-    agent_builder.add_node('invoke_travel_supervisor', invoke_travel_supervisor)
+    if state.get('flight_info') and state['flight_info'].get('flights'):
+        flight_cost = state['flight_info']['flights'][0]['total_price']
     
-    # Set entry point
-    agent_builder.set_entry_point("invoke_travel_supervisor")
+    if state.get('hotel_info') and state['hotel_info'].get('hotels'):
+        hotel_cost = state['hotel_info']['hotels'][0]['total_price']
+        num_days = state['hotel_info']['nights']
     
-    # Conditional edge: continue to tools or end
-    agent_builder.add_conditional_edges(
-        "invoke_travel_supervisor",
-        should_continue_travel,
-        {
-            "Action": "travel_tool_node",  # Execute tools
-            END: END,                       # Finish conversation
-        },
+    if state.get('itinerary_info') and state['itinerary_info'].get('attractions'):
+        activities_cost = sum(a['cost'] for a in state['itinerary_info']['attractions'])
+    
+    task_msg = HumanMessage(
+        content=f"Calculate budget with: flights=${flight_cost}, hotel=${hotel_cost}, days={num_days}, activities=${activities_cost}"
     )
     
-    # Loop back to supervisor after tools execute
-    agent_builder.add_edge("travel_tool_node", "invoke_travel_supervisor")
+    result = agent.invoke({"messages": state['messages'] + [task_msg]})
     
-    # Compile and return
-    agent = agent_builder.compile()
-    return agent
+    if hasattr(result, 'tool_calls') and result.tool_calls:
+        tool_call = result.tool_calls[0]
+        tool_result = calculate_budget_tool.invoke(tool_call['args'])
+        
+        return {
+            **state,
+            "budget_info": tool_result,
+            "messages": [
+                AIMessage(content="Budget calculated", tool_calls=result.tool_calls),
+                ToolMessage(content=str(tool_result), tool_call_id=tool_call['id'], name="calculate_budget_tool")
+            ]
+        }
+    
+    return {**state, "messages": [result]}
+
+
+def final_summary_node(state: TravelState):
+    """Create final comprehensive summary."""
+    summary_parts = []
+    
+    # Get user's original request
+    user_request = ""
+    for msg in state['messages']:
+        if isinstance(msg, HumanMessage):
+            user_request = msg.content
+            break
+    
+    summary_parts.append(f"Based on your request: '{user_request}'\n")
+    summary_parts.append("Here's your complete travel plan!\n\n")
+    
+    # Flight
+    if state.get('flight_info') and state['flight_info'].get('flights'):
+        flight = state['flight_info']['flights'][0]
+        summary_parts.append(f"✈️ **FLIGHT**: {flight['airline']}")
+        summary_parts.append(f"   Price: ${flight['total_price']} ({state['flight_info']['passengers']} passenger(s))")
+        summary_parts.append(f"   {flight['departure_time']} → {flight['arrival_time']} ({flight['duration_hours']}hrs)")
+        summary_parts.append(f"   Class: {flight['class']}\n\n")
+    
+    # Hotel
+    if state.get('hotel_info') and state['hotel_info'].get('hotels'):
+        hotel = state['hotel_info']['hotels'][0]
+        summary_parts.append(f"🏨 **HOTEL**: {hotel['name']}")
+        summary_parts.append(f"   Price: ${hotel['total_price']} ({state['hotel_info']['nights']} nights)")
+        summary_parts.append(f"   Rating: {hotel['rating']}/5.0 | Location: {hotel['location']}")
+        summary_parts.append(f"   {hotel['description']}\n\n")
+    
+    # Itinerary
+    if state.get('itinerary_info') and state['itinerary_info'].get('attractions'):
+        summary_parts.append("📅 **ITINERARY**:\n")
+        attractions = state['itinerary_info']['attractions']
+        num_days = state['itinerary_info']['num_days']
+        attractions_per_day = max(1, len(attractions) // num_days)
+        
+        for day in range(1, num_days + 1):
+            summary_parts.append(f"\nDay {day}:")
+            start_idx = (day - 1) * attractions_per_day
+            end_idx = start_idx + min(3, len(attractions) - start_idx)
+            for attr in attractions[start_idx:end_idx]:
+                cost_str = "Free" if attr['cost'] == 0 else f"${attr['cost']}"
+                summary_parts.append(f"  • {attr['name']} ({attr['category']}) - {cost_str}, {attr['duration_hours']}hrs")
+        summary_parts.append("\n\n")
+    
+    # Budget
+    if state.get('budget_info'):
+        budget = state['budget_info']
+        summary_parts.append("💰 **BUDGET BREAKDOWN**:\n")
+        summary_parts.append(f"   Flights: ${budget['flights']}")
+        summary_parts.append(f"   Accommodation: ${budget['accommodation']}")
+        summary_parts.append(f"   Activities: ${budget['activities']}")
+        summary_parts.append(f"   Food & Dining: ${budget['food']}")
+        summary_parts.append(f"   Local Transport: ${budget['transport']}")
+        summary_parts.append(f"   Miscellaneous: ${budget['miscellaneous']}")
+        summary_parts.append(f"   **TOTAL: ${budget['total']}**\n\n")
+    
+    summary_parts.append("Let me know if you'd like to adjust anything! ✨")
+    
+    final_message = AIMessage(content="\n".join(summary_parts))
+    return {**state, "messages": [final_message]}
 
 
 # ============================================
-# TESTING (if running directly)
+# ROUTING
 # ============================================
+
+def route_next(state: TravelState) -> str:
+    """Route to next agent or finish."""
+    next_agent = state.get("next_agent", "")
+    
+    if next_agent == "FINISH":
+        return "final_summary"
+    elif next_agent == "flight_agent":
+        return "flight_agent"
+    elif next_agent == "accommodation_agent":
+        return "accommodation_agent"
+    elif next_agent == "itinerary_agent":
+        return "itinerary_agent"
+    elif next_agent == "budget_agent":
+        return "budget_agent"
+    else:
+        return "supervisor"
+
+
+# ============================================
+# BUILD GRAPH
+# ============================================
+
+def build_travel_agent():
+    """Build the multi-agent travel planning system."""
+    workflow = StateGraph(TravelState)
+    
+    # Add all agent nodes
+    workflow.add_node("supervisor", supervisor_node)
+    workflow.add_node("flight_agent", flight_agent_node)
+    workflow.add_node("accommodation_agent", accommodation_agent_node)
+    workflow.add_node("itinerary_agent", itinerary_agent_node)
+    workflow.add_node("budget_agent", budget_agent_node)
+    workflow.add_node("final_summary", final_summary_node)
+    
+    # Set entry point
+    workflow.set_entry_point("supervisor")
+    
+    # Add routing
+    workflow.add_conditional_edges(
+        "supervisor",
+        route_next,
+        {
+            "flight_agent": "flight_agent",
+            "accommodation_agent": "accommodation_agent",
+            "itinerary_agent": "itinerary_agent",
+            "budget_agent": "budget_agent",
+            "final_summary": "final_summary"
+        }
+    )
+    
+    # Each agent goes back to supervisor
+    workflow.add_edge("flight_agent", "supervisor")
+    workflow.add_edge("accommodation_agent", "supervisor")
+    workflow.add_edge("itinerary_agent", "supervisor")
+    workflow.add_edge("budget_agent", "supervisor")
+    
+    # Final summary ends
+    workflow.add_edge("final_summary", END)
+    
+    return workflow.compile()
+
 
 if __name__ == "__main__":
-    print("🚀 Building travel agent...")
+    print("🚀 Building multi-agent travel planner...")
     agent = build_travel_agent()
-    
-    print("✅ Agent built successfully!")
-    print("\nTo use the agent, run: streamlit run app.py")
-
-
+    print("✅ Multi-agent system ready!")
