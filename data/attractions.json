@@ -37,6 +37,78 @@
   },
   {
     "id": "ATT005",
+    "name": "Tokyo DisneySea",
+    "city": "Tokyo",
+    "category": "Entertainment",
+    "duration_hours": 8,
+    "cost": 75,
+    "description": "Unique Disney theme park with nautical theme"
+  },
+  {
+    "id": "ATT006",
+    "name": "Akihabara Electric Town",
+    "city": "Tokyo",
+    "category": "Shopping",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Electronics and anime shopping paradise"
+  },
+  {
+    "id": "ATT007",
+    "name": "Shibuya Crossing",
+    "city": "Tokyo",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "World's busiest pedestrian crossing"
+  },
+  {
+    "id": "ATT008",
+    "name": "TeamLab Borderless",
+    "city": "Tokyo",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 35,
+    "description": "Digital art museum with interactive installations"
+  },
+  {
+    "id": "ATT009",
+    "name": "Harajuku Shopping",
+    "city": "Tokyo",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Trendy fashion district and Takeshita Street"
+  },
+  {
+    "id": "ATT010",
+    "name": "Sumo Wrestling Experience",
+    "city": "Tokyo",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 50,
+    "description": "Watch traditional sumo tournament or training"
+  },
+  {
+    "id": "ATT011",
+    "name": "Ramen Museum",
+    "city": "Tokyo",
+    "category": "Food",
+    "duration_hours": 2,
+    "cost": 20,
+    "description": "Interactive ramen history and tasting experience"
+  },
+  {
+    "id": "ATT012",
+    "name": "Imperial Palace Gardens",
+    "city": "Tokyo",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Beautiful gardens around the Emperor's residence"
+  },
+  {
+    "id": "ATT013",
     "name": "Eiffel Tower",
     "city": "Paris",
     "category": "Landmark",
@@ -45,7 +117,7 @@
     "description": "Iconic iron tower with panoramic views"
   },
   {
-    "id": "ATT006",
+    "id": "ATT014",
     "name": "Louvre Museum",
     "city": "Paris",
     "category": "Culture",
@@ -54,7 +126,7 @@
     "description": "World's largest art museum"
   },
   {
-    "id": "ATT007",
+    "id": "ATT015",
     "name": "Montmartre & Sacré-Cœur",
     "city": "Paris",
     "category": "Culture",
@@ -63,7 +135,88 @@
     "description": "Historic hilltop district with basilica"
   },
   {
-    "id": "ATT008",
+    "id": "ATT016",
+    "name": "Versailles Palace",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 4,
+    "cost": 20,
+    "description": "Opulent royal palace with stunning gardens"
+  },
+  {
+    "id": "ATT017",
+    "name": "Seine River Cruise",
+    "city": "Paris",
+    "category": "Entertainment",
+    "duration_hours": 1.5,
+    "cost": 15,
+    "description": "Romantic boat tour past Parisian landmarks"
+  },
+  {
+    "id": "ATT018",
+    "name": "Latin Quarter Food Tour",
+    "city": "Paris",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 45,
+    "description": "Guided tasting tour through historic district"
+  },
+  {
+    "id": "ATT019",
+    "name": "Arc de Triomphe",
+    "city": "Paris",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 13,
+    "description": "Napoleon's triumphal arch on Champs-Élysées"
+  },
+  {
+    "id": "ATT020",
+    "name": "Notre-Dame Cathedral",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Gothic masterpiece on Île de la Cité"
+  },
+  {
+    "id": "ATT021",
+    "name": "Musée d'Orsay",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 16,
+    "description": "Impressionist art in former railway station"
+  },
+  {
+    "id": "ATT022",
+    "name": "Champs-Élysées Shopping",
+    "city": "Paris",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Luxury shopping on famous avenue"
+  },
+  {
+    "id": "ATT023",
+    "name": "Moulin Rouge Show",
+    "city": "Paris",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 120,
+    "description": "Iconic cabaret show with dinner"
+  },
+  {
+    "id": "ATT024",
+    "name": "Catacombs Tour",
+    "city": "Paris",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 14,
+    "description": "Underground ossuary beneath Paris streets"
+  },
+  {
+    "id": "ATT025",
     "name": "Tanah Lot Temple",
     "city": "Bali",
     "category": "Culture",
@@ -72,7 +225,7 @@
     "description": "Sea temple on rocky outcrop with sunset views"
   },
   {
-    "id": "ATT009",
+    "id": "ATT026",
     "name": "Ubud Monkey Forest",
     "city": "Bali",
     "category": "Nature",
@@ -81,7 +234,7 @@
     "description": "Sacred forest sanctuary with playful monkeys"
   },
   {
-    "id": "ATT010",
+    "id": "ATT027",
     "name": "Tegallalang Rice Terraces",
     "city": "Bali",
     "category": "Nature",
@@ -90,7 +243,88 @@
     "description": "Stunning emerald rice paddies"
   },
   {
-    "id": "ATT011",
+    "id": "ATT028",
+    "name": "Uluwatu Temple",
+    "city": "Bali",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 6,
+    "description": "Clifftop temple with Kecak dance performance"
+  },
+  {
+    "id": "ATT029",
+    "name": "Bali Surfing Lesson",
+    "city": "Bali",
+    "category": "Adventure",
+    "duration_hours": 2,
+    "cost": 35,
+    "description": "Learn to surf on Bali's famous breaks"
+  },
+  {
+    "id": "ATT030",
+    "name": "Traditional Balinese Spa",
+    "city": "Bali",
+    "category": "Wellness",
+    "duration_hours": 2,
+    "cost": 40,
+    "description": "Authentic massage and spa treatment"
+  },
+  {
+    "id": "ATT031",
+    "name": "Tirta Empul Water Temple",
+    "city": "Bali",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 4,
+    "description": "Holy spring water temple for purification ritual"
+  },
+  {
+    "id": "ATT032",
+    "name": "Mount Batur Sunrise Trek",
+    "city": "Bali",
+    "category": "Adventure",
+    "duration_hours": 6,
+    "cost": 50,
+    "description": "Hike active volcano for spectacular sunrise"
+  },
+  {
+    "id": "ATT033",
+    "name": "Balinese Cooking Class",
+    "city": "Bali",
+    "category": "Food",
+    "duration_hours": 4,
+    "cost": 45,
+    "description": "Learn traditional Balinese cuisine"
+  },
+  {
+    "id": "ATT034",
+    "name": "Nusa Penida Day Trip",
+    "city": "Bali",
+    "category": "Nature",
+    "duration_hours": 9,
+    "cost": 60,
+    "description": "Boat trip to stunning neighboring island"
+  },
+  {
+    "id": "ATT035",
+    "name": "Seminyak Beach Club",
+    "city": "Bali",
+    "category": "Entertainment",
+    "duration_hours": 3,
+    "cost": 25,
+    "description": "Relax at trendy beach club with sunset views"
+  },
+  {
+    "id": "ATT036",
+    "name": "Ubud Art Market",
+    "city": "Bali",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Traditional crafts and souvenirs market"
+  },
+  {
+    "id": "ATT037",
     "name": "Grand Palace",
     "city": "Bangkok",
     "category": "Culture",
@@ -99,7 +333,7 @@
     "description": "Royal palace complex with ornate temples"
   },
   {
-    "id": "ATT012",
+    "id": "ATT038",
     "name": "Wat Pho",
     "city": "Bangkok",
     "category": "Culture",
@@ -108,7 +342,88 @@
     "description": "Temple with giant reclining Buddha"
   },
   {
-    "id": "ATT013",
+    "id": "ATT039",
+    "name": "Floating Market Tour",
+    "city": "Bangkok",
+    "category": "Culture",
+    "duration_hours": 4,
+    "cost": 25,
+    "description": "Traditional market on canals outside Bangkok"
+  },
+  {
+    "id": "ATT040",
+    "name": "Thai Cooking Class",
+    "city": "Bangkok",
+    "category": "Food",
+    "duration_hours": 4,
+    "cost": 50,
+    "description": "Learn to cook authentic Thai dishes"
+  },
+  {
+    "id": "ATT041",
+    "name": "Chatuchak Weekend Market",
+    "city": "Bangkok",
+    "category": "Shopping",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Massive market with thousands of stalls"
+  },
+  {
+    "id": "ATT042",
+    "name": "Wat Arun Temple",
+    "city": "Bangkok",
+    "category": "Culture",
+    "duration_hours": 1,
+    "cost": 3,
+    "description": "Temple of Dawn on Chao Phraya River"
+  },
+  {
+    "id": "ATT043",
+    "name": "Khao San Road",
+    "city": "Bangkok",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Famous backpacker street with nightlife"
+  },
+  {
+    "id": "ATT044",
+    "name": "Jim Thompson House",
+    "city": "Bangkok",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 7,
+    "description": "Traditional Thai house and silk museum"
+  },
+  {
+    "id": "ATT045",
+    "name": "Rooftop Bar Experience",
+    "city": "Bangkok",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 30,
+    "description": "Drinks at famous sky bar with city views"
+  },
+  {
+    "id": "ATT046",
+    "name": "Thai Massage",
+    "city": "Bangkok",
+    "category": "Wellness",
+    "duration_hours": 2,
+    "cost": 15,
+    "description": "Traditional Thai massage therapy"
+  },
+  {
+    "id": "ATT047",
+    "name": "Chinatown Food Walk",
+    "city": "Bangkok",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 35,
+    "description": "Street food tour in historic Yaowarat"
+  },
+  {
+    "id": "ATT048",
     "name": "Statue of Liberty",
     "city": "New York",
     "category": "Landmark",
@@ -117,7 +432,7 @@
     "description": "Iconic symbol of freedom on Liberty Island"
   },
   {
-    "id": "ATT014",
+    "id": "ATT049",
     "name": "Central Park",
     "city": "New York",
     "category": "Nature",
@@ -126,13 +441,903 @@
     "description": "Massive urban park in Manhattan"
   },
   {
-    "id": "ATT015",
+    "id": "ATT050",
+    "name": "Empire State Building",
+    "city": "New York",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 42,
+    "description": "Iconic skyscraper with observation deck"
+  },
+  {
+    "id": "ATT051",
+    "name": "Metropolitan Museum of Art",
+    "city": "New York",
+    "category": "Culture",
+    "duration_hours": 3.5,
+    "cost": 25,
+    "description": "World-class art museum with vast collection"
+  },
+  {
+    "id": "ATT052",
+    "name": "Broadway Show",
+    "city": "New York",
+    "category": "Entertainment",
+    "duration_hours": 2.5,
+    "cost": 150,
+    "description": "World-famous theater performance"
+  },
+  {
+    "id": "ATT053",
+    "name": "9/11 Memorial & Museum",
+    "city": "New York",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 26,
+    "description": "Moving tribute to 9/11 victims"
+  },
+  {
+    "id": "ATT054",
+    "name": "Brooklyn Bridge Walk",
+    "city": "New York",
+    "category": "Landmark",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Walk across iconic suspension bridge"
+  },
+  {
+    "id": "ATT055",
+    "name": "Times Square",
+    "city": "New York",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Bright lights and billboards in theater district"
+  },
+  {
+    "id": "ATT056",
+    "name": "High Line Park",
+    "city": "New York",
+    "category": "Nature",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Elevated park on former railway line"
+  },
+  {
+    "id": "ATT057",
+    "name": "Food Tour in Greenwich Village",
+    "city": "New York",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 75,
+    "description": "Taste diverse NYC cuisine"
+  },
+  {
+    "id": "ATT058",
+    "name": "MoMA",
+    "city": "New York",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 25,
+    "description": "Museum of Modern Art"
+  },
+  {
+    "id": "ATT059",
     "name": "Sydney Opera House",
     "city": "Sydney",
     "category": "Landmark",
     "duration_hours": 2,
     "cost": 20,
     "description": "Architectural masterpiece and performing arts venue"
+  },
+  {
+    "id": "ATT060",
+    "name": "Bondi Beach",
+    "city": "Sydney",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Famous beach perfect for swimming and surfing"
+  },
+  {
+    "id": "ATT061",
+    "name": "Sydney Harbor Bridge Climb",
+    "city": "Sydney",
+    "category": "Adventure",
+    "duration_hours": 3.5,
+    "cost": 250,
+    "description": "Guided climb to the top of the iconic bridge"
+  },
+  {
+    "id": "ATT062",
+    "name": "Taronga Zoo",
+    "city": "Sydney",
+    "category": "Nature",
+    "duration_hours": 4,
+    "cost": 50,
+    "description": "World-class zoo with harbor views"
+  },
+  {
+    "id": "ATT063",
+    "name": "The Rocks Markets",
+    "city": "Sydney",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Weekend markets in historic area"
+  },
+  {
+    "id": "ATT064",
+    "name": "Manly Beach Ferry",
+    "city": "Sydney",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 8,
+    "description": "Scenic ferry ride to beach suburb"
+  },
+  {
+    "id": "ATT065",
+    "name": "Royal Botanic Garden",
+    "city": "Sydney",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Beautiful gardens with harbor views"
+  },
+  {
+    "id": "ATT066",
+    "name": "Darling Harbour",
+    "city": "Sydney",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Waterfront entertainment precinct"
+  },
+  {
+    "id": "ATT067",
+    "name": "Sydney Tower Eye",
+    "city": "Sydney",
+    "category": "Landmark",
+    "duration_hours": 1.5,
+    "cost": 28,
+    "description": "360-degree city views from tallest building"
+  },
+  {
+    "id": "ATT068",
+    "name": "Coastal Walk Bondi to Coogee",
+    "city": "Sydney",
+    "category": "Nature",
+    "duration_hours": 2.5,
+    "cost": 0,
+    "description": "Scenic cliff-top walk between beaches"
+  },
+  {
+    "id": "ATT069",
+    "name": "Paddy's Markets",
+    "city": "Sydney",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Bargain shopping for souvenirs and produce"
+  },
+  {
+    "id": "ATT070",
+    "name": "Gyeongbokgung Palace",
+    "city": "Seoul",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 3,
+    "description": "Grand Joseon dynasty palace with changing of guard"
+  },
+  {
+    "id": "ATT071",
+    "name": "Bukchon Hanok Village",
+    "city": "Seoul",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Traditional Korean houses and cultural center"
+  },
+  {
+    "id": "ATT072",
+    "name": "N Seoul Tower",
+    "city": "Seoul",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 15,
+    "description": "Tower on Namsan Mountain with city views"
+  },
+  {
+    "id": "ATT073",
+    "name": "Myeongdong Shopping",
+    "city": "Seoul",
+    "category": "Shopping",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Premier shopping district for cosmetics and fashion"
+  },
+  {
+    "id": "ATT074",
+    "name": "Korean BBQ Experience",
+    "city": "Seoul",
+    "category": "Food",
+    "duration_hours": 2,
+    "cost": 35,
+    "description": "Authentic Korean barbecue dinner"
+  },
+  {
+    "id": "ATT075",
+    "name": "Changdeokgung Palace",
+    "city": "Seoul",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 3,
+    "description": "UNESCO palace with secret garden"
+  },
+  {
+    "id": "ATT076",
+    "name": "Gangnam District",
+    "city": "Seoul",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Trendy area from Psy's famous song"
+  },
+  {
+    "id": "ATT077",
+    "name": "DMZ Tour",
+    "city": "Seoul",
+    "category": "Culture",
+    "duration_hours": 6,
+    "cost": 60,
+    "description": "Visit demilitarized zone between North and South"
+  },
+  {
+    "id": "ATT078",
+    "name": "Insadong Street",
+    "city": "Seoul",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Traditional crafts and tea houses"
+  },
+  {
+    "id": "ATT079",
+    "name": "Korean Spa (Jjimjilbang)",
+    "city": "Seoul",
+    "category": "Wellness",
+    "duration_hours": 3,
+    "cost": 12,
+    "description": "Traditional Korean bathhouse experience"
+  },
+  {
+    "id": "ATT080",
+    "name": "Burj Khalifa",
+    "city": "Dubai",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 40,
+    "description": "World's tallest building with observation deck"
+  },
+  {
+    "id": "ATT081",
+    "name": "Dubai Mall",
+    "city": "Dubai",
+    "category": "Shopping",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Massive mall with aquarium and ice rink"
+  },
+  {
+    "id": "ATT082",
+    "name": "Desert Safari",
+    "city": "Dubai",
+    "category": "Adventure",
+    "duration_hours": 6,
+    "cost": 80,
+    "description": "Dune bashing, camel rides, and Bedouin dinner"
+  },
+  {
+    "id": "ATT083",
+    "name": "Gold Souk",
+    "city": "Dubai",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Traditional market for gold and jewelry"
+  },
+  {
+    "id": "ATT084",
+    "name": "Palm Jumeirah",
+    "city": "Dubai",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Iconic man-made palm-shaped island"
+  },
+  {
+    "id": "ATT085",
+    "name": "Dubai Fountain Show",
+    "city": "Dubai",
+    "category": "Entertainment",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Choreographed fountain with music and lights"
+  },
+  {
+    "id": "ATT086",
+    "name": "Spice Souk",
+    "city": "Dubai",
+    "category": "Shopping",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Traditional market for spices and textiles"
+  },
+  {
+    "id": "ATT087",
+    "name": "Dubai Marina Walk",
+    "city": "Dubai",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Waterfront promenade with dining and shopping"
+  },
+  {
+    "id": "ATT088",
+    "name": "Ski Dubai",
+    "city": "Dubai",
+    "category": "Adventure",
+    "duration_hours": 3,
+    "cost": 70,
+    "description": "Indoor ski resort in the desert"
+  },
+  {
+    "id": "ATT089",
+    "name": "Jumeirah Beach",
+    "city": "Dubai",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Public beach with Burj Al Arab views"
+  },
+  {
+    "id": "ATT090",
+    "name": "British Museum",
+    "city": "London",
+    "category": "Culture",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "World history museum with Egyptian artifacts"
+  },
+  {
+    "id": "ATT091",
+    "name": "Tower of London",
+    "city": "London",
+    "category": "Culture",
+    "duration_hours": 3,
+    "cost": 30,
+    "description": "Historic castle housing the Crown Jewels"
+  },
+  {
+    "id": "ATT092",
+    "name": "London Eye",
+    "city": "London",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 32,
+    "description": "Giant observation wheel on the Thames"
+  },
+  {
+    "id": "ATT093",
+    "name": "West End Theatre Show",
+    "city": "London",
+    "category": "Entertainment",
+    "duration_hours": 2.5,
+    "cost": 75,
+    "description": "World-class theater in London's theatre district"
+  },
+  {
+    "id": "ATT094",
+    "name": "Buckingham Palace",
+    "city": "London",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 30,
+    "description": "Royal residence with changing of the guard"
+  },
+  {
+    "id": "ATT095",
+    "name": "Camden Market",
+    "city": "London",
+    "category": "Shopping",
+    "duration_hours": 2.5,
+    "cost": 0,
+    "description": "Alternative market with food and vintage finds"
+  },
+  {
+    "id": "ATT096",
+    "name": "Westminster Abbey",
+    "city": "London",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 24,
+    "description": "Gothic church where royals are crowned"
+  },
+  {
+    "id": "ATT097",
+    "name": "Big Ben & Parliament",
+    "city": "London",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Iconic clock tower and government buildings"
+  },
+  {
+    "id": "ATT098",
+    "name": "Afternoon Tea Experience",
+    "city": "London",
+    "category": "Food",
+    "duration_hours": 2,
+    "cost": 55,
+    "description": "Traditional British tea with scones and sandwiches"
+  },
+  {
+    "id": "ATT099",
+    "name": "Harry Potter Studio Tour",
+    "city": "London",
+    "category": "Entertainment",
+    "duration_hours": 4,
+    "cost": 50,
+    "description": "Behind-the-scenes of Harry Potter films"
+  },
+  {
+    "id": "ATT100",
+    "name": "Victoria Peak Tram",
+    "city": "Hong Kong",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 12,
+    "description": "Tram ride to mountain top with city views"
+  },
+  {
+    "id": "ATT101",
+    "name": "Temple Street Night Market",
+    "city": "Hong Kong",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Bustling night market with street food"
+  },
+  {
+    "id": "ATT102",
+    "name": "Dim Sum Food Tour",
+    "city": "Hong Kong",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 40,
+    "description": "Guided tour tasting best dim sum restaurants"
+  },
+  {
+    "id": "ATT103",
+    "name": "Star Ferry Ride",
+    "city": "Hong Kong",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 3,
+    "description": "Iconic ferry crossing Victoria Harbor"
+  },
+  {
+    "id": "ATT104",
+    "name": "Tian Tan Buddha",
+    "city": "Hong Kong",
+    "category": "Culture",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Giant bronze Buddha statue on Lantau Island"
+  },
+  {
+    "id": "ATT105",
+    "name": "Ladies Market",
+    "city": "Hong Kong",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Street market for clothing and accessories"
+  },
+  {
+    "id": "ATT106",
+    "name": "Symphony of Lights",
+    "city": "Hong Kong",
+    "category": "Entertainment",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Nightly light show across harbor"
+  },
+  {
+    "id": "ATT107",
+    "name": "Tsim Sha Tsui Promenade",
+    "city": "Hong Kong",
+    "category": "Landmark",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Waterfront walk with skyline views"
+  },
+  {
+    "id": "ATT108",
+    "name": "Hong Kong Disneyland",
+    "city": "Hong Kong",
+    "category": "Entertainment",
+    "duration_hours": 8,
+    "cost": 80,
+    "description": "Disney theme park with Asian touches"
+  },
+  {
+    "id": "ATT109",
+    "name": "Dragon's Back Hike",
+    "city": "Hong Kong",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Scenic coastal hiking trail"
+  },
+  {
+    "id": "ATT110",
+    "name": "Sagrada Familia",
+    "city": "Barcelona",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 26,
+    "description": "Gaudí's unfinished masterpiece basilica"
+  },
+  {
+    "id": "ATT111",
+    "name": "Park Güell",
+    "city": "Barcelona",
+    "category": "Landmark",
+    "duration_hours": 2,
+    "cost": 10,
+    "description": "Colorful park designed by Gaudí"
+  },
+  {
+    "id": "ATT112",
+    "name": "La Boqueria Market",
+    "city": "Barcelona",
+    "category": "Food",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Vibrant food market on Las Ramblas"
+  },
+  {
+    "id": "ATT113",
+    "name": "Gothic Quarter Walking Tour",
+    "city": "Barcelona",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 0,
+    "description": "Medieval streets and Roman ruins"
+  },
+  {
+    "id": "ATT114",
+    "name": "Tapas Bar Hopping",
+    "city": "Barcelona",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 45,
+    "description": "Experience authentic tapas culture"
+  },
+  {
+    "id": "ATT115",
+    "name": "Casa Batlló",
+    "city": "Barcelona",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 25,
+    "description": "Modernist building by Gaudí"
+  },
+  {
+    "id": "ATT116",
+    "name": "Barceloneta Beach",
+    "city": "Barcelona",
+    "category": "Nature",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "City beach with restaurants and bars"
+  },
+  {
+    "id": "ATT117",
+    "name": "Camp Nou Stadium Tour",
+    "city": "Barcelona",
+    "category": "Entertainment",
+    "duration_hours": 2,
+    "cost": 28,
+    "description": "FC Barcelona's legendary football stadium"
+  },
+  {
+    "id": "ATT118",
+    "name": "Montjuïc Castle",
+    "city": "Barcelona",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 5,
+    "description": "Hilltop fortress with panoramic views"
+  },
+  {
+    "id": "ATT119",
+    "name": "Magic Fountain Show",
+    "city": "Barcelona",
+    "category": "Entertainment",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Evening fountain show with music and lights"
+  },
+  {
+    "id": "ATT120",
+    "name": "Gateway of India",
+    "city": "Mumbai",
+    "category": "Landmark",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Iconic arch monument by the harbor"
+  },
+  {
+    "id": "ATT121",
+    "name": "Elephanta Caves",
+    "city": "Mumbai",
+    "category": "Culture",
+    "duration_hours": 4,
+    "cost": 15,
+    "description": "Ancient cave temples on island (ferry included)"
+  },
+  {
+    "id": "ATT122",
+    "name": "Bollywood Studio Tour",
+    "city": "Mumbai",
+    "category": "Entertainment",
+    "duration_hours": 3,
+    "cost": 30,
+    "description": "Behind-the-scenes look at film industry"
+  },
+  {
+    "id": "ATT123",
+    "name": "Street Food Tour",
+    "city": "Mumbai",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 25,
+    "description": "Taste Mumbai's famous street food"
+  },
+  {
+    "id": "ATT124",
+    "name": "Marine Drive",
+    "city": "Mumbai",
+    "category": "Landmark",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Scenic waterfront promenade"
+  },
+  {
+    "id": "ATT125",
+    "name": "Chhatrapati Shivaji Terminus",
+    "city": "Mumbai",
+    "category": "Culture",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "UNESCO heritage Victorian railway station"
+  },
+  {
+    "id": "ATT126",
+    "name": "Colaba Causeway Shopping",
+    "city": "Mumbai",
+    "category": "Shopping",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Bustling market street for souvenirs"
+  },
+  {
+    "id": "ATT127",
+    "name": "Dharavi Slum Tour",
+    "city": "Mumbai",
+    "category": "Culture",
+    "duration_hours": 2.5,
+    "cost": 20,
+    "description": "Responsible tour of Asia's largest slum"
+  },
+  {
+    "id": "ATT128",
+    "name": "Haji Ali Dargah",
+    "city": "Mumbai",
+    "category": "Culture",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Mosque on island accessed by causeway"
+  },
+  {
+    "id": "ATT129",
+    "name": "Sanjay Gandhi National Park",
+    "city": "Mumbai",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 8,
+    "description": "Urban national park with caves"
+  },
+  {
+    "id": "ATT130",
+    "name": "Colosseum",
+    "city": "Rome",
+    "category": "Landmark",
+    "duration_hours": 2.5,
+    "cost": 16,
+    "description": "Ancient Roman amphitheater"
+  },
+  {
+    "id": "ATT131",
+    "name": "Vatican Museums",
+    "city": "Rome",
+    "category": "Culture",
+    "duration_hours": 4,
+    "cost": 17,
+    "description": "Sistine Chapel and papal art collection"
+  },
+  {
+    "id": "ATT132",
+    "name": "Trevi Fountain",
+    "city": "Rome",
+    "category": "Landmark",
+    "duration_hours": 0.5,
+    "cost": 0,
+    "description": "Baroque fountain - throw a coin for luck"
+  },
+  {
+    "id": "ATT133",
+    "name": "Roman Forum",
+    "city": "Rome",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 16,
+    "description": "Ancient Roman marketplace ruins"
+  },
+  {
+    "id": "ATT134",
+    "name": "Pasta Making Class",
+    "city": "Rome",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 60,
+    "description": "Learn to make fresh Italian pasta"
+  },
+  {
+    "id": "ATT135",
+    "name": "Pantheon",
+    "city": "Rome",
+    "category": "Culture",
+    "duration_hours": 1,
+    "cost": 0,
+    "description": "Ancient Roman temple with perfect dome"
+  },
+  {
+    "id": "ATT136",
+    "name": "Spanish Steps",
+    "city": "Rome",
+    "category": "Landmark",
+    "duration_hours": 0.5,
+    "cost": 0,
+    "description": "Famous baroque stairway"
+  },
+  {
+    "id": "ATT137",
+    "name": "Borghese Gallery",
+    "city": "Rome",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 15,
+    "description": "Art gallery with Bernini sculptures"
+  },
+  {
+    "id": "ATT138",
+    "name": "Trastevere Food Tour",
+    "city": "Rome",
+    "category": "Food",
+    "duration_hours": 3,
+    "cost": 50,
+    "description": "Taste authentic Roman cuisine"
+  },
+  {
+    "id": "ATT139",
+    "name": "Catacombs Tour",
+    "city": "Rome",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 8,
+    "description": "Ancient underground burial chambers"
+  },
+  {
+    "id": "ATT140",
+    "name": "Phi Phi Island Tour",
+    "city": "Phuket",
+    "category": "Nature",
+    "duration_hours": 8,
+    "cost": 50,
+    "description": "Day trip to stunning tropical islands"
+  },
+  {
+    "id": "ATT141",
+    "name": "Scuba Diving",
+    "city": "Phuket",
+    "category": "Adventure",
+    "duration_hours": 4,
+    "cost": 80,
+    "description": "Explore underwater world of Andaman Sea"
+  },
+  {
+    "id": "ATT142",
+    "name": "Phuket Old Town",
+    "city": "Phuket",
+    "category": "Culture",
+    "duration_hours": 2,
+    "cost": 0,
+    "description": "Colorful Sino-Portuguese architecture"
+  },
+  {
+    "id": "ATT143",
+    "name": "Big Buddha",
+    "city": "Phuket",
+    "category": "Culture",
+    "duration_hours": 1.5,
+    "cost": 0,
+    "description": "Massive Buddha statue with panoramic views"
+  },
+  {
+    "id": "ATT144",
+    "name": "Thai Massage",
+    "city": "Phuket",
+    "category": "Wellness",
+    "duration_hours": 2,
+    "cost": 20,
+    "description": "Traditional Thai massage therapy"
+  },
+  {
+    "id": "ATT145",
+    "name": "Patong Beach",
+    "city": "Phuket",
+    "category": "Nature",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Popular beach with water sports"
+  },
+  {
+    "id": "ATT146",
+    "name": "Bangla Road Nightlife",
+    "city": "Phuket",
+    "category": "Entertainment",
+    "duration_hours": 3,
+    "cost": 0,
+    "description": "Vibrant nightlife street"
+  },
+  {
+    "id": "ATT147",
+    "name": "Elephant Sanctuary",
+    "city": "Phuket",
+    "category": "Nature",
+    "duration_hours": 4,
+    "cost": 70,
+    "description": "Ethical elephant interaction experience"
+  },
+  {
+    "id": "ATT148",
+    "name": "Phang Nga Bay Kayaking",
+    "city": "Phuket",
+    "category": "Adventure",
+    "duration_hours": 6,
+    "cost": 60,
+    "description": "Kayak through limestone karsts"
+  },
+  {
+    "id": "ATT149",
+    "name": "Phuket FantaSea Show",
+    "city": "Phuket",
+    "category": "Entertainment",
+    "duration_hours": 3,
+    "cost": 75,
+    "description": "Thai cultural theme park show"
   }
 ]
-
