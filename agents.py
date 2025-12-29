@@ -299,7 +299,7 @@ def itineraryAgent(destination: str, num_days: str, interests: str = "sightseein
 def set_up_llm(temperature=0, max_tokens=5000):
     """Initialize Groq LLM with configuration."""
     llm = ChatGroq(
-        model="llama-3.1-70b-versatile",  # Best for complex reasoning
+        model="meta-llama/llama-4-scout-17b-16e-instruct",  # Best for complex reasoning
         temperature=temperature,
         max_tokens=max_tokens,
         groq_api_key=os.getenv("GROQ_API_KEY")
@@ -501,4 +501,5 @@ if __name__ == "__main__":
     
     print("✅ Agent built successfully!")
     print("\nTo use the agent, run: streamlit run app.py")
+
 
