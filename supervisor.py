@@ -1,74 +1,77 @@
 """
-Supervisor Agent - Coordinates all specialist agents.
+Supervisor Agent - Coordinates all specialist agents via tool calls.
 """
 
 from langchain.prompts import ChatPromptTemplate
 from datetime import datetime
 from constants import get_llm
 
+# Import specialist agent tools
+from flight_agent import flight_agent
+from accommodation_agent import accommodation_agent
+from itinerary_agent import itinerary_agent
+from budget_agent import budget_agent
+
 
 def create_supervisor():
     """
-    Create the supervisor agent that coordinates all specialist agents.
+    Create the supervisor agent that coordinates specialist agents.
     
-    Responsibilities:
-    - Parse user requests
-    - Decide which specialist agent to call next
-    - Compile final comprehensive travel plan
+    The supervisor has access to 4 specialist agent tools:
+    - flight_agent: For finding and recommending flights
+    - accommodation_agent: For finding and recommending hotels
+    - itinerary_agent: For creating day-by-day activity plans
+    - budget_agent: For calculating total trip costs
+    
+    The supervisor uses the ReAct pattern:
+    - Reasoning: Analyzes user request and decides which agents to call
+    - Acting: Calls specialist agent tools with appropriate parameters
+    - Observation: Reviews agent outputs and compiles final plan
     """
     llm = get_llm()
     
+    # List of agent tools available to supervisor
+    agent_tools = [flight_agent, accommodation_agent, itinerary_agent, budget_agent]
+    
     supervisor_prompt = ChatPromptTemplate.from_messages([
-        ("system", f"""You are the Travel Planning Supervisor coordinating specialist agents.
+        ("system", f"""You are a Travel Planning Supervisor coordinating specialist agents via tool calls.
 Today's date: {datetime.now().strftime("%Y-%m-%d")}
 
-Your team:
-- flight_agent: Searches and recommends flights
-- accommodation_agent: Searches and recommends hotels
-- itinerary_agent: Creates day-by-day plans
-- budget_agent: Calculates total costs
+**Your Specialist Agent Tools:**
+- flight_agent: Searches flights and recommends best option
+- accommodation_agent: Searches hotels and recommends best option  
+- itinerary_agent: Creates day-by-day activity schedule
+- budget_agent: Calculates complete budget breakdown
 
-**Decision Rules:**
-1. If user asks a casual question (hello, how are you, etc.) → Respond politely and say "FINISH"
-2. If user asks about travel but no specific plan yet → Ask clarifying questions and say "FINISH" 
-3. If user provides clear travel request (destination, dates/duration) → Delegate to agents
+**Your Workflow:**
+1. Parse the user's travel request
+2. Call the appropriate specialist agents using your tools
+3. Extract costs from agent responses (look for price amounts in $ format)
+4. Compile all responses into ONE complete, well-formatted travel plan
 
-When user provides a clear travel request, follow this workflow:
-1. Extract: destination, days, origin (default Singapore), dates (default 30 days from now)
-2. Delegate to flight_agent with: origin, destination, date
-3. Delegate to accommodation_agent with: destination, check_in, check_out
-4. Delegate to itinerary_agent with: destination, num_days
-5. Delegate to budget_agent with: costs from previous agents
-6. Compile COMPLETE travel plan in ONE message
+**Default Assumptions (if not specified):**
+- Origin: Singapore
+- Travel date: 30 days from today ({(datetime.now().replace(year=datetime.now().year + (datetime.now().month == 12), month=datetime.now().month % 12 + 1 if datetime.now().day >= 28 else datetime.now().month)).strftime("%Y-%m-%d")})
+- Duration: 3 days
+- Passengers/Guests: 1
 
-Return format:
-"Here's your complete [X]-day trip to [destination]!
+**When user provides a travel request:**
+1. Call flight_agent(origin, destination, date, passengers)
+2. Call accommodation_agent(destination, check_in, check_out, guests)
+3. Call itinerary_agent(destination, num_days, interests)
+4. Extract costs from outputs and call budget_agent(flights_cost, hotel_cost, num_days, activities_cost)
+5. Compile everything into a complete plan
 
-✈️ FLIGHT: [airline] - $[price]
-[details]
+**Final Output Format:**
+Present a cohesive travel plan combining all agent outputs. Include all details from each agent.
 
-🏨 HOTEL: [name] - $[price]
-[details]
+**For casual/non-travel queries:**
+Respond politely without calling any tools.
 
-📅 ITINERARY:
-Day 1: [activities]
-Day 2: [activities]
-...
-
-💰 BUDGET:
-Total: $[amount]
-[breakdown]
-
-[Budget status if mentioned]"
-
-Which agent should handle this next? Reply ONLY with:
-- "flight_agent" - if need flights
-- "accommodation_agent" - if need hotels
-- "itinerary_agent" - if need itinerary
-- "budget_agent" - if need budget calculation
-- "FINISH" - if you have all info and ready to present final plan"""),
+Call the tools now to help the user!"""),
         ("placeholder", "{messages}")
     ])
     
-    return supervisor_prompt | llm
+    # Bind the agent tools to the supervisor LLM
+    return supervisor_prompt | llm.bind_tools(agent_tools)
 

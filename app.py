@@ -82,14 +82,9 @@ if prompt:
                 # Convert to LangChain format
                 lc_messages = [convert_dict_to_lc_message(msg) for msg in st.session_state.messages]
                 
-                # Invoke agent with proper state
+                # Invoke agent with simplified state (only messages field needed)
                 response = st.session_state.agent.invoke({
-                    "messages": lc_messages,
-                    "next_agent": "",
-                    "flight_info": {},
-                    "hotel_info": {},
-                    "itinerary_info": {},
-                    "budget_info": {}
+                    "messages": lc_messages
                 })
                 
                 # Get final response
