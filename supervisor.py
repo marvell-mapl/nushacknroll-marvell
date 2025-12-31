@@ -7,7 +7,7 @@ from datetime import datetime
 from constants import get_llm
 
 # Import specialist agent tools
-from flight_agent import flight_agent
+# from flight_agent import flight_agent
 from accommodation_agent import accommodation_agent
 from itinerary_agent import itinerary_agent
 from budget_agent import budget_agent
@@ -18,7 +18,7 @@ def create_supervisor():
     Create the supervisor agent that coordinates specialist agents.
     
     The supervisor has access to 4 specialist agent tools:
-    - flight_agent: For finding and recommending flights
+    # - flight_agent: For finding and recommending flights
     - accommodation_agent: For finding and recommending hotels
     - itinerary_agent: For creating day-by-day activity plans
     - budget_agent: For calculating total trip costs
@@ -31,14 +31,14 @@ def create_supervisor():
     llm = get_llm()
     
     # List of agent tools available to supervisor
-    agent_tools = [flight_agent, accommodation_agent, itinerary_agent, budget_agent]
+    agent_tools = [accommodation_agent, itinerary_agent, budget_agent] #add flight_agent
     
     supervisor_prompt = ChatPromptTemplate.from_messages([
         ("system", f"""You are a Travel Planning Supervisor coordinating specialist agents via tool calls.
 Today's date: {datetime.now().strftime("%Y-%m-%d")}
 
 **Your Specialist Agent Tools:**
-- flight_agent: Searches flights and recommends best option
+# - flight_agent: Searches flights and recommends best option
 - accommodation_agent: Searches hotels and recommends best option  
 - itinerary_agent: Creates day-by-day activity schedule
 - budget_agent: Calculates complete budget breakdown
@@ -56,10 +56,10 @@ Today's date: {datetime.now().strftime("%Y-%m-%d")}
 - Passengers/Guests: 1
 
 **When user provides a travel request:**
-1. Call flight_agent(origin, destination, date, passengers)
+# 1. Call flight_agent(origin, destination, date, passengers)
 2. Call accommodation_agent(destination, check_in, check_out, guests)
 3. Call itinerary_agent(destination, num_days, interests)
-4. Extract costs from outputs and call budget_agent(flights_cost, hotel_cost, num_days, activities_cost)
+4. Extract costs from outputs and call budget_agent(hotel_cost, num_days, activities_cost) # add flight_cost
 5. Compile everything into a complete plan
 
 **Final Output Format:**
@@ -74,4 +74,5 @@ Call the tools now to help the user!"""),
     
     # Bind the agent tools to the supervisor LLM
     return supervisor_prompt | llm.bind_tools(agent_tools)
+
 
