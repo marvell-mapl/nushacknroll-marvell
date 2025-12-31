@@ -239,16 +239,25 @@ Use your tools to create a detailed budget breakdown."""
     messages = [task]
     max_iterations = 6
     
+    print(f"  💭 Budget Agent starting ReAct loop (max {max_iterations} iterations)...")
+    
     for iteration in range(max_iterations):
+        print(f"\n  🔄 Iteration {iteration + 1}: Reasoning...")
+        
         result = agent.invoke({"messages": messages})
         messages.append(result)
         
         if not hasattr(result, 'tool_calls') or not result.tool_calls:
+            print(f"  ✅ Budget Agent finished reasoning - no more tools needed")
             break
         
+        print(f"  📞 Budget Agent decided to call {len(result.tool_calls)} internal tool(s):")
         for tool_call in result.tool_calls:
             tool_name = tool_call['name']
             tool_args = tool_call['args']
+            
+            print(f"     🔨 Calling: {tool_name}")
+            print(f"        Args: {tool_args}")
             
             tool_map = {
                 "calculate_core_budget": calculate_core_budget,
@@ -259,6 +268,7 @@ Use your tools to create a detailed budget breakdown."""
             
             if tool_name in tool_map:
                 tool_result = tool_map[tool_name].invoke(tool_args)
+                print(f"     ✓ {tool_name} returned results")
                 
                 messages.append(
                     ToolMessage(

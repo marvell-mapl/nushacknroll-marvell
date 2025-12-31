@@ -47,8 +47,22 @@ def supervisor_node(state: TravelState):
     Supervisor agent reasons about the request and calls specialist agents.
     This is the REASONING step in the ReAct pattern.
     """
+    print("\n" + "="*60)
+    print("🧠 SUPERVISOR REASONING...")
+    print("="*60)
+    
     supervisor = create_supervisor()
     result = supervisor.invoke({"messages": state['messages']})
+    
+    # Show what supervisor decided
+    if hasattr(result, 'tool_calls') and result.tool_calls:
+        print(f"\n📋 Supervisor decided to call {len(result.tool_calls)} agent(s):")
+        for tool_call in result.tool_calls:
+            print(f"   → {tool_call['name']}")
+            print(f"      Args: {tool_call['args']}")
+    else:
+        print("\n✅ Supervisor has all information, preparing final response")
+    
     return {"messages": [result]}
 
 
@@ -67,9 +81,16 @@ def tool_node(state: TravelState):
             tool_name = tool_call['name']
             tool_args = tool_call['args']
             
+            print(f"\n{'─'*60}")
+            print(f"🔧 EXECUTING: {tool_name.upper()}")
+            print(f"{'─'*60}")
+            
             # Execute the specialist agent tool
             if tool_name in TOOL_MAP:
                 result = TOOL_MAP[tool_name].invoke(tool_args)
+                
+                print(f"✅ {tool_name} completed")
+                print(f"{'─'*60}\n")
                 
                 # Create tool message with result (OBSERVATION step in ReAct)
                 tool_messages.append(

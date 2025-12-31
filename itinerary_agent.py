@@ -193,16 +193,25 @@ Use your tools to find the best activities and create a balanced daily schedule.
     messages = [task]
     max_iterations = 8
     
+    print(f"  💭 Itinerary Agent starting ReAct loop (max {max_iterations} iterations)...")
+    
     for iteration in range(max_iterations):
+        print(f"\n  🔄 Iteration {iteration + 1}: Reasoning...")
+        
         result = agent.invoke({"messages": messages})
         messages.append(result)
         
         if not hasattr(result, 'tool_calls') or not result.tool_calls:
+            print(f"  ✅ Itinerary Agent finished reasoning - no more tools needed")
             break
         
+        print(f"  📞 Itinerary Agent decided to call {len(result.tool_calls)} internal tool(s):")
         for tool_call in result.tool_calls:
             tool_name = tool_call['name']
             tool_args = tool_call['args']
+            
+            print(f"     🔨 Calling: {tool_name}")
+            print(f"        Args: {tool_args}")
             
             tool_map = {
                 "search_all_attractions": search_all_attractions,
@@ -213,6 +222,7 @@ Use your tools to find the best activities and create a balanced daily schedule.
             
             if tool_name in tool_map:
                 tool_result = tool_map[tool_name].invoke(tool_args)
+                print(f"     ✓ {tool_name} returned results")
                 
                 messages.append(
                     ToolMessage(

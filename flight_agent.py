@@ -273,19 +273,28 @@ Use your tools wisely to find the optimal flight."""
     messages = [task]
     max_iterations = 5
     
+    print(f"  💭 Flight Agent starting ReAct loop (max {max_iterations} iterations)...")
+    
     for iteration in range(max_iterations):
+        print(f"\n  🔄 Iteration {iteration + 1}: Reasoning...")
+        
         # Agent reasons and decides which tool(s) to call
         result = agent.invoke({"messages": messages})
         messages.append(result)
         
         # Check if agent is done (no more tool calls)
         if not hasattr(result, 'tool_calls') or not result.tool_calls:
+            print(f"  ✅ Flight Agent finished reasoning - no more tools needed")
             break
         
         # Execute all tool calls
+        print(f"  📞 Flight Agent decided to call {len(result.tool_calls)} internal tool(s):")
         for tool_call in result.tool_calls:
             tool_name = tool_call['name']
             tool_args = tool_call['args']
+            
+            print(f"     🔨 Calling: {tool_name}")
+            print(f"        Args: {tool_args}")
             
             # Map tool names to functions
             tool_map = {
@@ -297,6 +306,7 @@ Use your tools wisely to find the optimal flight."""
             
             if tool_name in tool_map:
                 tool_result = tool_map[tool_name].invoke(tool_args)
+                print(f"     ✓ {tool_name} returned results")
                 
                 # Add tool result to conversation
                 messages.append(
