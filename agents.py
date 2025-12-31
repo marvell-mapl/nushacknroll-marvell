@@ -9,7 +9,7 @@ from typing import List, TypedDict, Annotated
 import operator
 
 # Import specialist agent tools
-from flight_agent import flight_agent
+# from flight_agent import flight_agent
 from accommodation_agent import accommodation_agent
 from itinerary_agent import itinerary_agent
 from budget_agent import budget_agent
@@ -31,7 +31,7 @@ class TravelState(TypedDict):
 
 # Map tool names to their implementations
 TOOL_MAP = {
-    "flight_agent": flight_agent,
+    # "flight_agent": flight_agent,
     "accommodation_agent": accommodation_agent,
     "itinerary_agent": itinerary_agent,
     "budget_agent": budget_agent,
@@ -172,3 +172,4 @@ if __name__ == "__main__":
     print("🚀 Building multi-agent travel planner...")
     agent = build_travel_agent()
     print("✅ Multi-agent system ready!")
+
