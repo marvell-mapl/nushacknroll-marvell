@@ -18,7 +18,7 @@ def create_supervisor():
     Create the supervisor agent that coordinates specialist agents.
     
     The supervisor has access to 4 specialist agent tools:
-    # - flight_agent: For finding and recommending flights
+
     - accommodation_agent: For finding and recommending hotels
     - itinerary_agent: For creating day-by-day activity plans
     - budget_agent: For calculating total trip costs
@@ -74,5 +74,6 @@ Call the tools now to help the user!"""),
     
     # Bind the agent tools to the supervisor LLM
     return supervisor_prompt | llm.bind_tools(agent_tools)
+
 
 
