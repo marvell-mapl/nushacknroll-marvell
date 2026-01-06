@@ -264,7 +264,7 @@ This workshop combines **three cutting-edge patterns**:
    ```bash
    git clone <your-repo-url>
    cd nushacknroll-marvell
-   python -m venv venv
+   python 3.11 -m venv venv
    venv\Scripts\activate  # Windows
    pip install -r requirements.txt
    ```
@@ -308,7 +308,7 @@ This workshop combines **three cutting-edge patterns**:
 
 ## 📋 Prerequisites
 
-- Python 3.10 or higher
+- Python 3.11
 - A Groq API key ([Get free key](https://console.groq.com/keys))
 - Basic Python knowledge
 - (Optional) Jupyter for interactive notebooks
@@ -365,7 +365,7 @@ nushacknroll-marvell/
 
 ### Tech Stack
 
-- **Python 3.10+**: Core language
+- **Python 3.11**: Core language
 - **Streamlit**: Web UI framework
 - **LangGraph**: State machine workflow orchestration
 - **ReAct Framework**: Transparent reasoning pattern (Thought → Action → Observation)
@@ -484,4 +484,5 @@ This project is provided as educational material for workshop purposes. Feel fre
 **Workshop Contact:** For questions during the workshop, ask your instructor or check the project Issues tab.
 
 **Happy Building! 🚀**
+
 
