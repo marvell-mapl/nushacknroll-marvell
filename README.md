@@ -264,7 +264,7 @@ This workshop combines **three cutting-edge patterns**:
    ```bash
    git clone <your-repo-url>
    cd nushacknroll-marvell
-   python 3.11 -m venv venv
+   python -m venv venv
    venv\Scripts\activate  # Windows
    pip install -r requirements.txt
    ```
@@ -327,40 +327,6 @@ This workshop combines **three cutting-edge patterns**:
    - 📅 **Itinerary:** Day-by-day activity plan
    - 💰 **Budget:** Cost breakdown and validation
 
-## 📂 Project Structure
-
-```
-nushacknroll-marvell/
-├── app.py                      # Streamlit UI entry point
-├── agents/                     # All agent modules
-│   ├── supervisor.py           # Orchestration agent (LangGraph workflow)
-│   ├── flight_agent.py         # Flight recommendations (ReAct)
-│   ├── accommodation_agent.py  # Lodging recommendations (ReAct)
-│   ├── itinerary_agent.py      # Activity planning (ReAct)
-│   └── budget_agent.py         # Cost validation (ReAct)
-├── data/                       # Mock JSON data
-│   ├── flights.json            # 12 sample flights
-│   ├── accommodations.json     # 10 sample hotels
-│   └── attractions.json        # 15 sample activities
-├── prompts/                    # LLM prompt templates (ReAct format)
-│   ├── supervisor.txt
-│   ├── flight_agent.txt
-│   ├── accommodation_agent.txt
-│   ├── itinerary_agent.txt
-│   └── budget_agent.txt
-├── utils/                      # Shared utilities
-│   ├── llm.py                  # LLM wrapper with ReAct support
-│   └── data_loader.py          # JSON data loader
-├── requirements.txt            # Python dependencies
-├── env.example                 # Environment template
-├── .env                        # Your actual API key (create this!)
-├── README.md                   # This file
-├── LANGGRAPH_GUIDE.md          # LangGraph deep dive
-├── REACT_FRAMEWORK.md          # ReAct framework guide
-├── WORKSHOP_OVERVIEW.md        # Complete workshop guide
-└── SETUP_INSTRUCTIONS.md       # Quick setup guide
-```
-
 ## 🔧 Technical Details
 
 ### Tech Stack
@@ -370,15 +336,8 @@ nushacknroll-marvell/
 - **LangGraph**: State machine workflow orchestration
 - **ReAct Framework**: Transparent reasoning pattern (Thought → Action → Observation)
 - **LangChain**: LLM utilities and abstractions
-- **Groq API**: Fast LLM inference (Llama 3.1 8B)
+- **Groq API**: Fast LLM inference (meta-llama/llama-4-scout-17b-16e-instruct)
 - **JSON**: Mock data storage (no external APIs)
-
-### LLM Configuration
-
-- **Model:** `llama-3.1-8b-instant`
-- **Temperature:** 0.2 (low for consistent, logical outputs)
-- **Max Tokens:** 1024 (keeps responses concise)
-- **Strategy:** Short, focused prompts per agent
 
 ### Design Patterns
 
@@ -390,99 +349,11 @@ nushacknroll-marvell/
 6. **Prompt Templates:** Externalized in `.txt` files for easy modification
 7. **Separation of Concerns:** UI, agents, data, and utilities are decoupled
 
-## 🎓 Extension Ideas for Participants
-
-### Beginner Extensions
-- [ ] Add more destinations and data to JSON files
-- [ ] Implement date filtering for flights
-- [ ] Add hotel type preferences (budget/luxury)
-- [ ] Include free activities in itineraries
-- [ ] Improve ReAct parsing with better regex patterns
-
-### Intermediate Extensions
-- [ ] Add conditional edges in LangGraph (e.g., retry if budget fails)
-- [ ] Implement parallel node execution for independent agents
-- [ ] Add a "Review Agent" node that critiques the plan
-- [ ] Create a feedback loop where Budget Agent can trigger re-planning
-- [ ] Add weather considerations
-- [ ] Implement multi-city trip support with sub-graphs
-
-### Advanced Extensions
-- [ ] Replace mock data with real APIs (Amadeus, Booking.com)
-- [ ] Add LangGraph visualization using Mermaid diagrams
-- [ ] Implement human-in-the-loop approval nodes
-- [ ] Add checkpointing for workflow persistence
-- [ ] Create streaming responses from each node
-- [ ] Add error handling nodes with retry logic
-- [ ] Implement A/B testing with multiple workflow paths
-
-## 🐛 Troubleshooting
-
-### "GROQ_API_KEY not found"
-- Ensure you created a `.env` file (not `env.example`)
-- Check that your API key is correctly formatted in `.env`
-- Verify the `.env` file is in the project root directory (same folder as `app.py`)
-- See [SETUP_INSTRUCTIONS.md](SETUP_INSTRUCTIONS.md) for detailed setup
-
-### "No module named 'groq'"
-- Run `pip install -r requirements.txt`
-- Ensure your virtual environment is activated
-
-### "No flights/accommodations found"
-- Check that destination names match the JSON data (case-insensitive)
-- Available destinations: Tokyo, Paris, Bali, Bangkok, New York, Sydney
-- Adjust budget constraints if too restrictive
-
-### App won't start
-- Ensure you're in the correct directory: `cd travel-agent-workshop`
-- Check Python version: `python --version` (should be 3.10+)
-- Try: `streamlit run app.py --server.headless true`
-
-## 📚 Learning Resources
-
-### ReAct Framework
-- [ReAct Paper (Original)](https://arxiv.org/abs/2210.03629)
-- [LangChain ReAct Agents](https://python.langchain.com/docs/modules/agents/agent_types/react)
-- [Our ReAct Guide](REACT_FRAMEWORK.md) - Detailed implementation guide
-
-### Multi-Agent Systems
-- [LangChain Agents Documentation](https://python.langchain.com/docs/modules/agents/)
-- [LangGraph Tutorial](https://langchain-ai.github.io/langgraph/)
-- [Our LangGraph Guide](LANGGRAPH_GUIDE.md) - Workshop-specific guide
-- [Multi-Agent Design Patterns (Paper)](https://arxiv.org/abs/2308.08155)
-
-### Prompt Engineering
-- [Groq Documentation](https://console.groq.com/docs)
-- [Prompt Engineering Guide](https://www.promptingguide.ai/)
-- [ReAct Prompting](https://www.promptingguide.ai/techniques/react)
-
-### Streamlit
-- [Streamlit Documentation](https://docs.streamlit.io/)
-- [Streamlit Gallery](https://streamlit.io/gallery)
-
-## 🤝 Contributing
-
-This is a workshop project! Feel free to:
-- Add more agents (e.g., Weather Agent, Translation Agent)
-- Improve prompt engineering
-- Enhance the UI
-- Add error handling
-- Create unit tests
-
 ## 📄 License
 
 This project is provided as educational material for workshop purposes. Feel free to use and modify as needed.
 
-## 🙏 Acknowledgments
-
-- **Groq** for providing fast, free LLM inference
-- **Streamlit** for making web UIs simple
-- **LangChain** for agent orchestration utilities
-
----
-
-**Workshop Contact:** For questions during the workshop, ask your instructor or check the project Issues tab.
-
 **Happy Building! 🚀**
+
 
 
