@@ -32,9 +32,9 @@ def calculate_core_budget(flights_cost: str, hotel_cost: str, activities_cost: s
     Returns:
         dict: Core expenses breakdown
     """
-    flights = int(flights_cost)
-    hotel = int(hotel_cost)
-    activities = int(activities_cost)
+    flights = int(flights_cost.strip().replace('$', ''))
+    hotel = int(hotel_cost.strip().replace('$', ''))
+    activities = int(activities_cost.strip().replace('$', ''))
     core_total = flights + hotel + activities
     
     return {
@@ -96,7 +96,7 @@ def calculate_miscellaneous(major_expenses_total: str):
     Returns:
         dict: Miscellaneous cost calculation
     """
-    total = int(major_expenses_total)
+    total = int(major_expenses_total.replace('$', ''))
     misc = int(total * 0.1)
     
     return {
@@ -119,8 +119,8 @@ def optimize_budget(total_cost: str, user_budget: str):
     Returns:
         dict: Budget comparison and tips
     """
-    total = int(total_cost)
-    budget = int(user_budget)
+    total = int(total_cost.replace('$', ''))
+    budget = int(user_budget.replace('$', ''))
     difference = budget - total
     percentage = (total / budget * 100) if budget > 0 else 0
     
@@ -201,6 +201,7 @@ Process:
 
 Format your output as:
 💰 COMPLETE BUDGET BREAKDOWN
+Please ALWAYS output your numbers as integers
 
 **Major Expenses:**
 - Flights: $X
@@ -226,11 +227,11 @@ Format your output as:
     # Create task
     task = HumanMessage(
         content=f"""Calculate complete trip budget:
-- Flights: ${flights_cost}
-- Hotel: ${hotel_cost}
-- Activities: ${activities_cost}
+- Flights: {flights_cost}
+- Hotel: {hotel_cost}
+- Activities: {activities_cost}
 - Duration: {num_days} days
-{f"- User Budget: ${user_budget}" if int(user_budget) > 0 else ""}
+{f"- User Budget: {user_budget}" if int(user_budget) > 0 else ""}
 
 Use your tools to create a detailed budget breakdown."""
     )
@@ -281,3 +282,4 @@ Use your tools to create a detailed budget breakdown."""
     final_response = messages[-1].content if messages else "Budget calculation failed"
     
     return final_response
+
